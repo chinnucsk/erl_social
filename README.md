@@ -1,25 +1,55 @@
-sina
-====
-This is a sina sdk for web application in erlang.
+platten sdk
+============
 
-Another, adding douban interface to this application.
+Platten_sdk is a sdk for connecting the thrid platform.
 
-You can add redefine the value in sina.hrl, we will use them as default value in codes.
+We can login ,get user info and send messages on third platform.
 
-How to use:
+Mainly,including QQ,Sina,Douban.
 
-*1. ./start.sh 
+Introduce
+-------------
+The platten.hrl mainly define the default value for the corresponding platform.
 
-*2. sina:ouath([]). 获取授权 
+Platten_util.erl is a tool for our application. 
 
-*3. sina:user([{screen_name, "lucas-lzz"}]). 查看用户信息 
+*_oauth for oauth.
 
-*4. sina:blog([]). 发微博 
+*_user for get userinfo.
 
-*5. sina:blog_pic([]). 发微博带图片 
+* blog for send a status to the platform.
 
-*6. sina:friendship([]). 关注 
+*_log for debug infomations.
 
-*7. douban_oauth:oauth([]).
+Attention
+------------
 
-*8 douban_user:info([]).
+The parameter code needs you get from the  web of return_uri from platform server. 
+
+Use the Code to get access_token.
+
+Use the access_token to get user_info or send messages or other things.
+
+How To Use
+------------
+
+The parameter of args is tuple list, if you didn't define, some paras will use the default in platten.hrl.
+
+* make && ./start.sh 
+
+* platten_sdk:oauth(sina,Args).
+  platten_sdk:oauth(qq,Args).
+  platten_sdk:oauth(douban,Args).
+
+* platten_sdk:user(sina, Args).
+  platten_sdk:user(qq, Args).
+  platten_sdk:user(douban, Args).
+
+* platten_sdk:friendship(Args).
+
+* platten_sdk:blog(Args).
+
+* platten_sdk:blog_pic(Args).
+
+
+
