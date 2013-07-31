@@ -1,0 +1,12 @@
+{application, platten_sdk,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { platten_sdk_app, []}},
+  {env, []}
+ ]}.
