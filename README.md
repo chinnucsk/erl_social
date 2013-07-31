@@ -13,13 +13,13 @@ The platten.hrl mainly define the default value for the corresponding platform.
 
 Platten_util.erl is a tool for our application. 
 
-*_oauth for oauth.
+* _oauth for oauth.
 
-*_user for get userinfo.
+* _user for get userinfo.
 
-* blog for send a status to the platform.
+* _blog for send a status to the platform.
 
-*_log for debug infomations.
+* _log for debug infomations.
 
 Attention
 ------------
