@@ -18,8 +18,9 @@ oauth(Args) ->
 	platten_log:format("req~p~n",[BodyReq]),
 	{ok, {_,_,Body}} = platten_util:req({post, {sina,Path}, [platten_util:ct(url)], BodyReq}),
 	List = platten_util:decode_body(Body),
-	platten_log:format("list~p~n",[List]),
-	platten_util:get_key(<<"access_token">>, List).
+	AccessToken  = binary_to_list(platten_util:get_key(<<"access_token">>, List)),
+	Uid  = binary_to_list(platten_util:get_key(<<"uid">>, List)),
+	{AccessToken,Uid}.
 
 
 
