@@ -20,7 +20,7 @@ oauth(Args) ->
 	List = platten_util:decode_body(Body),
 	AccessToken  = binary_to_list(platten_util:get_key(<<"access_token">>, List)),
 	Uid  = binary_to_list(platten_util:get_key(<<"uid">>, List)),
-	{AccessToken,Uid}.
+	{Uid, AccessToken}.
 
 
 
