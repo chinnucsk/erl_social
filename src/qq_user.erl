@@ -1,7 +1,8 @@
 -module(qq_user).
 
 -export([
-			info/1
+			info/1,
+			get_openid/1
 		]).
 
 -include("platten.hrl").
@@ -17,7 +18,6 @@ info(Args) ->
 	{binary_to_list(OpenId), Res}.
 
 get_openid(Token) ->
-	io:format("token is ~p~n",[Token]),
 	Path = "/oauth2.0/me?access_token=" ++ Token,
 	{ok, {_,_,Body}} = platten_util:req({get, {qq,Path}, [], []}),
 	[_,Body1,_] = string:tokens(binary_to_list(Body)," "),
