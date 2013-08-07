@@ -12,7 +12,7 @@ info(Args) ->
 	{Name, Value} = get_value(Args),
 	Path = "/users/show.json" ++ "?access_token=" ++ Token ++ 
 			"&" ++ Name ++ "=" ++ Value,
-	{ok, {_,_,Body}} = platten_util:req({get, {sina,Path}, [platten_util:ct(json)], []}),
+	Body = ?handle(platten_util:req({get, {sina,Path}, [platten_util:ct(json)], []})),
 	platten_util:decode_body(Body).
 
 %%% =================================================================

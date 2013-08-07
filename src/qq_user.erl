@@ -13,13 +13,13 @@ info(Args) ->
 	OpenId = get_openid(Token),
 	OauthConsumerKey = ?APP_KEY_QQ,
 	Path = "/user/get_simple_userinfo?access_token=" ++ Token ++ "&oauth_consumer_key=" ++ OauthConsumerKey ++ "&openid=" ++ binary_to_list(OpenId),
-	{ok, {_,_,Body}} = platten_util:req({get, {qq,Path}, [], []}),
+	Body = ?handle(platten_util:req({get, {qq,Path}, [], []})),
 	Res = platten_util:decode_body(Body),
 	{binary_to_list(OpenId), Res}.
 
 get_openid(Token) ->
 	Path = "/oauth2.0/me?access_token=" ++ Token,
-	{ok, {_,_,Body}} = platten_util:req({get, {qq,Path}, [], []}),
+	Body = ?handle(platten_util:req({get, {qq,Path}, [], []})),
 	[_,Body1,_] = string:tokens(binary_to_list(Body)," "),
 	Res = platten_util:decode_body(list_to_binary(Body1)),
 	platten_util:get_key(<<"openid">>, Res).

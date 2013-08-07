@@ -8,7 +8,7 @@
 
 -define(TOKEN, "2.00G66nIC8VTB1C048355a4505KOVZC").
 -define(CONTENT, "FUCK YOU").
--define(PIC, "/home/lucas/Pictures/1.png").
+-define(PIC, "/home/lucas/name.gif").
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% douban 
@@ -35,3 +35,12 @@
 -define(REDIRECT_URI, "http://lucas.yunio.com:8001").
 -define(GRANT_TYPE, "authorization_code").
 
+
+-define(handle(Res),
+	case Res of
+		{ok, {_,_,Bodys}} ->
+				Bodys;
+		{error, Reason} ->
+				platten_log:format("~p Accoure Error ~p ~n",[erlang:time(),Reason]),
+				{error,Reason}
+	end).

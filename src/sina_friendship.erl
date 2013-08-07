@@ -12,7 +12,7 @@ create(Args) ->
 	Args1 = platten_util:set_all_key([{access_token, ?TOKEN}], Args),
 	Path = "/friendships/create.json",
 	BodyReq = platten_util:create_body(Args1),
-	{ok, {_,_,Body}} = platten_util:req({post, {sina,Path}, [platten_util:ct(url)], BodyReq}),
+	Body = ?handle(platten_util:req({post, {sina,Path}, [platten_util:ct(url)], BodyReq})),
     platten_util:decode_body(Body). 
 
 %%% ================================================================

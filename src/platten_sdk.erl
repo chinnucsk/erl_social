@@ -36,11 +36,11 @@ user(douban,Args) ->
 friendship(Args) ->
 	sina_friendship:create(Args).
 
-%% blog(Args::[{access_token,Value::list()},{status,Value::list()}]) -> ok.
+%% blog(Args::[{access_token,Value::list()},{status,Value::list()}]) -> Res::success|failed.
 blog(Args) ->
 	sina_blog:blog(Args).
 
-%% blog_pic(Args::[{access_token,Value::list()},{status,Value::list()},{pic,Value::list()}]) -> ok.
+%% blog_pic(Args::[{access_token,Value::list()},{status,Value::list()},{pic,Value::list()}]) -> Res::success|failed.
 blog_pic(Args) ->
 	sina_blog:blog_pic(Args).
 

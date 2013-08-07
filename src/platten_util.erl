@@ -12,13 +12,12 @@
 		 header/1,
 		 create_body/1,
 		 format_multipart_formdata/3,
-		 get_binary/1,
 		 to_l/1
 		 ]).
 
 getout_key(Key, Args) ->
 	Pic = get_key(Key, Args),
-	Args1 = lists:keydelte(Key, 1, Args),
+	Args1 = lists:keydelete(Key, 1, Args),
 	{Pic, Args1}.
 
 get_key(Key, Args) ->
@@ -74,8 +73,8 @@ url({qq, Path}) ->
 	Url = ["https://graph.qq.com", Path],
 	lists:flatten(Url).
 
-header(Body) ->
-	[{"Content-Length", integer_to_list(length(Body))}].
+header(Length) ->
+	{"Content-Length", Length}.
 
 ct(url) ->
 	{"Content-Type", "application/x-www-form-urlencoded"};
@@ -84,7 +83,7 @@ ct(mul) ->
 ct(json) ->
 	{"Content-Type","application/json"};
 ct(Boundary) ->
-	lists:concat(["multipart/form-data; boundary=", Boundary]).
+	{"Content-Type", "multipart/form-data; boundary=" ++ Boundary}.
 
 req({Method, Path, Hdrs, Body}) ->
     Hdrs1 = [{"user-agent", "eunit"} | Hdrs],
@@ -96,14 +95,6 @@ encode_body(Args) ->
 decode_body(Args) ->
 	jsx:decode(Args, [{labels, binary}]).
 
-get_binary(Binary) ->
-	get_binary(binary_to_list(Binary), []).
-get_binary([], Res) ->
-	lists:flatten(lists:reverse(Res));
-get_binary([L | Rest], Res) ->
-	get_binary(Rest, [to_binary(L) | Res]).
-
-
 format_multipart_formdata(Boundary, Fields, Files) ->
     FieldParts = lists:map(fun({FieldName, FieldContent}) ->
                                    [lists:concat(["--", Boundary]),
@@ -114,8 +105,8 @@ format_multipart_formdata(Boundary, Fields, Files) ->
     FieldParts2 = lists:append(FieldParts),
     FileParts = lists:map(fun({FieldName, FileName, FileContent}) ->
                                   [lists:concat(["--", Boundary]),
-                                   lists:concat(["Content-Disposition: format-data; name=\"",atom_to_list(FieldName),"\"; filename=\"",FileName,"\""]),
-                                   lists:concat(["Content-Type: ", "application/octet-stream"]),
+                                   lists:concat(["Content-Disposition: form-data; name=\"",atom_to_list(FieldName),"\"; filename=\"",FileName,"\""]),
+                                   lists:concat(["Content-Type: ", "image/gif"]),
                                    "",
                                    FileContent]
                           end, Files),
@@ -134,15 +125,6 @@ to_l(Key) when is_binary(Key) ->
 %%% ===============================================================
 %%% private
 %%% ==============================================================
-to_binary(L) when is_integer(L) ->
-	to_binary(L, []).
-
-to_binary(0, Res) ->
-	lists:reverse(Res);
-to_binary(L, Res) ->
-	M = L rem 2,
-	D = L div 2,
-	to_binary(D, [M | Res]).
 
 do_create_body([], Acc) ->
 	lists:reverse(Acc);
