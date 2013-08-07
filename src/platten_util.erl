@@ -11,7 +11,7 @@
 		 ct/1,
 		 header/1,
 		 create_body/1,
-		 format_multipart_formdata/3,
+		 format_multipart_formdata/4,
 		 to_l/1
 		 ]).
 
@@ -95,7 +95,7 @@ encode_body(Args) ->
 decode_body(Args) ->
 	jsx:decode(Args, [{labels, binary}]).
 
-format_multipart_formdata(Boundary, Fields, Files) ->
+format_multipart_formdata(Boundary, Fields, Files, Ctype) ->
     FieldParts = lists:map(fun({FieldName, FieldContent}) ->
                                    [lists:concat(["--", Boundary]),
                                     lists:concat(["Content-Disposition: form-data; name=\"",atom_to_list(FieldName),"\""]),
@@ -106,7 +106,7 @@ format_multipart_formdata(Boundary, Fields, Files) ->
     FileParts = lists:map(fun({FieldName, FileName, FileContent}) ->
                                   [lists:concat(["--", Boundary]),
                                    lists:concat(["Content-Disposition: form-data; name=\"",atom_to_list(FieldName),"\"; filename=\"",FileName,"\""]),
-                                   lists:concat(["Content-Type: ", "image/gif"]),
+                                   lists:concat(["Content-Type: ", Ctype]),
                                    "",
                                    FileContent]
                           end, Files),

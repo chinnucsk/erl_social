@@ -29,12 +29,13 @@ blog_pic(Args) ->
 	{PicPath, Args2} = platten_util:getout_key(pic, Args1),
 	{ok, Pic} = file:read_file(PicPath),
 	PicBin = binary_to_list(Pic),
+	{ok,Ctype} = emagic:from_buffer(Pic),
 	Path = "/2/statuses/upload.json",
 	Boundary = "--ABCD",
 	Files = [{pic, PicPath, PicBin}],
-	BodyReq = platten_util:format_multipart_formdata(Boundary, Args2, Files),
+	BodyReq = platten_util:format_multipart_formdata(Boundary, Args2, Files, binary_to_list(Ctype)),
 	Length = integer_to_list(length(BodyReq)),
-	Res1 = platten_util:req({post, {sina,Path}, [platten_util:ct(Boundary),platten_util:header(Length)], BodyReq}),
+	Res1 = platten_util:req({post, {sina,Path}, [platten_util:ct(Boundary), platten_util:header(Length)], BodyReq}),
 	Res = case ?handle(Res1) of
 		{error,_} ->
 			failed;
