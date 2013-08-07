@@ -17,7 +17,6 @@ oauth(Args) ->
 	BodyReq =platten_util:create_body(Args1),
 	platten_log:format("req~p~n",[BodyReq]),
 	{ok, {_,_,Body}} = platten_util:req({post, {qq,Path}, [platten_util:ct(url)], BodyReq}),
-	io:format("body is ~p~n",[Body]),
 	get_token(Body).
 
 get_token(String) ->
