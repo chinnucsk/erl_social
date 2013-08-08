@@ -30,6 +30,15 @@ Use the Code to get access_token.
 
 Use the access_token to get user_info or send messages or other things.
 
+Log 
+------------
+
+Server start a log server called platten_log_server, you can define the log path in include file(`paras` LOG_FILE).
+
+platten_log:error/1, will print error type infos.
+
+platten_log:format/1, will print debug type infos.
+
 How To Use
 ------------
 
