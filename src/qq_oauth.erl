@@ -15,7 +15,6 @@ oauth(Args) ->
 								{redirect_uri, ?REDIRECT_URI_QQ}], Args),
 	Path = "/oauth2.0/token",
 	BodyReq =platten_util:create_body(Args1),
-	platten_log:format("req~p~n",[BodyReq]),
 	Body = ?handle(platten_util:req({post, {qq,Path}, [platten_util:ct(url)], BodyReq})),
 	get_token(Body).
 

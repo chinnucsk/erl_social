@@ -22,8 +22,8 @@
 %% qq 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
--define(APP_KEY_QQ, "100493774").
--define(APP_SECRET_QQ, "b89597d7694819f289175337ab315cb6").
+-define(APP_KEY_QQ, "100498331").
+-define(APP_SECRET_QQ, "b0c64798dd28da85f7fb7ca38ae6f6cc").
 -define(CODE_QQ, "").
 -define(REDIRECT_URI_QQ, "http://3.yunio.com").
 -define(FORMAT_QQ, "json").
@@ -41,8 +41,11 @@
 
 -define(handle(Res),
 	case Res of
+		{ok, {{200,_},_,Bodys}} ->
+				platten_log:format(platten_util:to_l(Bodys)),
+				Bodys;
 		{ok, {_,_,Bodys}} ->
-%				platten_log:format(platten_util:to_l(Bodys)),
+				platten_log:format(platten_util:to_l(Bodys)),
 				Bodys;
 		{error, Reason} ->
 				platten_log:error(platten_util:to_l(Reason)),

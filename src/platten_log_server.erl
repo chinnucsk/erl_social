@@ -31,7 +31,7 @@ log(Type,Info) ->
 %%% =================================================================
 
 init([]) ->
-	Io = file:open(?LOG_FILE, [read,write,append]),
+	{ok,Io} = file:open(?LOG_FILE, [read,write,append]),
 	{ok, #state{io=Io}}.
 
 terminate(_Reason, #state{io=Io}) ->
@@ -39,11 +39,11 @@ terminate(_Reason, #state{io=Io}) ->
 	ok.
 
 handle_call({debug,Info}, _From, #state{io=Io}=State) ->
-	Res = io_lib:format("[debug] time:~p info ~p~n",[erlang:time(),Info]),
+	Res = "[debug] info " ++ Info,
 	Return = file:write(Io, Res),
 	{reply, Return, State};
 handle_call({error,Info}, _From, #state{io=Io}=State) ->
-	Res = io_lib:format("[error] time:~p info ~p~n",[erlang:time(),Info]),
+	Res = "[error] info " ++ Info,
 	Return = file:write(Io, Res),
 	{reply, Return, State}.
 

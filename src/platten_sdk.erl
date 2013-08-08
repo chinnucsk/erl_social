@@ -2,7 +2,8 @@
 
 -export([start/0]).
 
--export([oauth/2,
+-export([
+		oauth/2,
 		user/2,
 		friendship/1,
 		blog/2,

@@ -31,7 +31,7 @@ blog_pic(Args) ->
 								   {openid, ""},
 								   {format, ?FORMAT_QQ},
 	                               {content, ?CONTENT},
-								   {pic, ?PIC}, Args]),
+								   {pic, ?PIC}], Args),
 	{PicPath, Args2} = platten_util:getout_key(pic, Args1),
 	{ok, Pic} = file:read_file(PicPath),
 	PicBin = binary_to_list(Pic),
@@ -41,7 +41,7 @@ blog_pic(Args) ->
 	Files = [{pic, PicPath, PicBin}],
 	BodyReq = platten_util:format_multipart_formdata(Boundary, Args2, Files, binary_to_list(Ctype)),
 	Length = integer_to_list(length(BodyReq)),
-	Res = case ?handle(platten_util:req({post, {sina,Path}, [platten_util:ct(Boundary),platten_util:header(Length)], BodyReq})) of
+	Res = case ?handle(platten_util:req({post, {qq,Path}, [platten_util:ct(Boundary),platten_util:header(Length)], BodyReq})) of
 		{error,_} ->
 			failed;
 		_ ->
