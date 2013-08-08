@@ -5,8 +5,8 @@
 -export([oauth/2,
 		user/2,
 		friendship/1,
-		blog/1,
-		blog_pic/1
+		blog/2,
+		blog_pic/2
 		]).
 
 start() ->
@@ -37,11 +37,18 @@ friendship(Args) ->
 	sina_friendship:create(Args).
 
 %% blog(Args::[{access_token,Value::list()},{status,Value::list()}]) -> Res::success|failed.
-blog(Args) ->
-	sina_blog:blog(Args).
+blog(sina,Args) ->
+	sina_blog:blog(Args);
+blog(qq,Args) ->
+	qq_blog:blog(Args).
 
-%% blog_pic(Args::[{access_token,Value::list()},{status,Value::list()},{pic,Value::list()}]) -> Res::success|failed.
-blog_pic(Args) ->
-	sina_blog:blog_pic(Args).
+
+%% blog_pic(sina,Args::[{access_token,Value::list()},{status,Value::list()},{pic,Value::list()}]) -> Res::success|failed.
+%% blog_pic(qq,Args::[{access_token,Value::list()},{oauth_consumer_key,Value::list()},{openid,Value::list()},{format,Value::json|xml},{content,Value::list()},{pic,Value::list()}]) -> Res::success|failed.
+blog_pic(sina,Args) ->
+	sina_blog:blog_pic(Args);
+blog_pic(qq,Args) ->
+	qq_blog:blog_pic(Args).
+
 
 

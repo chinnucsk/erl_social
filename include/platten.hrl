@@ -26,7 +26,7 @@
 -define(APP_SECRET_QQ, "b89597d7694819f289175337ab315cb6").
 -define(CODE_QQ, "").
 -define(REDIRECT_URI_QQ, "http://3.yunio.com").
-
+-define(FORMAT_QQ, "json").
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% public 
