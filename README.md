@@ -35,6 +35,9 @@ How To Use
 
 The parameter of args is tuple list, if you didn't define, some paras will use the default in platten.hrl.
 
+The Parameter instructions delcars in platten_sdk.erl.
+
+
 * make && ./start.sh 
 
 * platten_sdk:oauth(sina,Args).
@@ -47,9 +50,12 @@ The parameter of args is tuple list, if you didn't define, some paras will use t
 
 * platten_sdk:friendship(Args).
 
-* platten_sdk:blog(Args).
+* platten_sdk:blog(sina,Args).
+  platten_sdk:blog(qq,Args).
 
-* platten_sdk:blog_pic(Args).
+* platten_sdk:blog_pic(sina,Args).
+  platten_sdk:blog_pic(qq,Args).
 
+* platten_sdk:qzone_share(Args).
 
 

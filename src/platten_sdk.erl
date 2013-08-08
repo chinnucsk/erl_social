@@ -6,7 +6,8 @@
 		user/2,
 		friendship/1,
 		blog/2,
-		blog_pic/2
+		blog_pic/2,
+		qzone_share/1
 		]).
 
 start() ->
@@ -50,5 +51,6 @@ blog_pic(sina,Args) ->
 blog_pic(qq,Args) ->
 	qq_blog:blog_pic(Args).
 
-
-
+%% qzone_share(Args::[{access_token,Value::list()},{oauth_consumer_key,Value::list()},{openid,Value::list()},{format,Value::json|xml},{title,Value::list()},{url,Value::list()},{site,Value::list()},{fromurl,Value::list()}]) -> Res::success|failed.
+qzone_share(Args) ->
+	qq_zone_share:share(Args).
