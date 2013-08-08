@@ -42,12 +42,12 @@
 -define(handle(Res),
 	case Res of
 		{ok, {{200,_},_,Bodys}} ->
-				platten_log:format(platten_util:to_l(Bodys)),
+%				platten_log:format(platten_util:to_l(Bodys)),
 				Bodys;
 		{ok, {_,_,Bodys}} ->
-				platten_log:format(platten_util:to_l(Bodys)),
+%				platten_log:format(platten_util:to_l(Bodys)),
 				Bodys;
 		{error, Reason} ->
-				platten_log:error(platten_util:to_l(Reason)),
+%				platten_log:error(platten_util:to_l(Reason)),
 				{error,Reason}
 	end).
