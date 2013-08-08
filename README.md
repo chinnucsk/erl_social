@@ -30,6 +30,13 @@ Use the Code to get access_token.
 
 Use the access_token to get user_info or send messages or other things.
 
+The Third Platten Url
+-----------
+
+* [sina develop url](http://open.weibo.com/wiki/%E5%BE%AE%E5%8D%9AAPI) <br />
+* [douban develop url](http://developers.douban.com/wiki/?title=guide) <br />
+* [qq develop url](http://wiki.opensns.qq.com/wiki/%E3%80%90QQ%E7%99%BB%E5%BD%95%E3%80%91API%E6%96%87%E6%A1%A3) <br />
+
 Log 
 ------------
 
