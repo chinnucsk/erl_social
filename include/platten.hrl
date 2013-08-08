@@ -7,8 +7,6 @@
 -define(CODE, "9df9d4d4c798302f06fb6bcbb1fef804").
 
 -define(TOKEN, "2.00G66nIC8VTB1C048355a4505KOVZC").
--define(CONTENT, "FUCK YOU").
--define(PIC, "/home/lucas/name.gif").
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% douban 
@@ -37,6 +35,10 @@
 -define(REDIRECT_URI, "http://lucas.yunio.com:8001").
 -define(GRANT_TYPE, "authorization_code").
 -define(LOG_FILE, "/home/lucas/platten.log").
+-define(CONTENT, "FUCK YOU").
+-define(PIC, "/home/lucas/name.gif").
+-define(URL, "http://a.hiphotos.baidu.com/album/w%3D2048/sign=fcafacd600e9390156028a3e4fd455e7/ca1349540923dd54d638b39ed009b3de9d8248f8.jpg").
+
 
 
 -define(handle(Res),

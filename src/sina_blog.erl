@@ -2,7 +2,8 @@
 
 -export([
 			blog/1,
-			blog_pic/1
+			blog_pic/1,
+			blog_pic_url/1
 		]).
 
 -include("platten.hrl").
@@ -44,4 +45,18 @@ blog_pic(Args) ->
 	end,
 	Res.
 
-	
+-spec blog_pic_url(list(tuple())) -> any().
+blog_pic_url(Args) ->
+	Args1 = platten_util:set_all_key([{access_token, ?TOKEN},
+	                               {status, ?CONTENT},
+								   {url, ?URL}], Args),
+	Path = "/2/statuses/upload_url_text.json",
+	BodyReq = platten_util:create_body(Args1), 
+	Res = case ?handle(platten_util:req({post, {sina,Path}, [platten_util:ct(url)], BodyReq})) of
+		{error,_} ->
+			failed;
+		_ ->
+			success
+		end,
+	Res.	
+		

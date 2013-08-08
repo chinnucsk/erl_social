@@ -8,6 +8,7 @@
 		friendship/1,
 		blog/2,
 		blog_pic/2,
+		blog_pic_url/2,
 		qzone_share/1
 		]).
 
@@ -52,6 +53,11 @@ blog_pic(sina,Args) ->
 blog_pic(qq,Args) ->
 	qq_blog:blog_pic(Args).
 
+%% blog_pic_url(sina,Args::[{access_token,Value::list()},{status,Value::list()},{url,Value::list()}]) -> Res::success|failed.
+blog_pic_url(sina,Args) ->
+	sina_blog:blog_pic_url(Args).
+
 %% qzone_share(Args::[{access_token,Value::list()},{oauth_consumer_key,Value::list()},{openid,Value::list()},{format,Value::json|xml},{title,Value::list()},{url,Value::list()},{site,Value::list()},{fromurl,Value::list()}]) -> Res::success|failed.
 qzone_share(Args) ->
 	qq_zone_share:share(Args).
+
