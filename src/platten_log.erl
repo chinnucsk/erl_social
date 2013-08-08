@@ -2,11 +2,11 @@
 
 -export([
 		error/1,
-		format/2
+		format/1
 		]).
 
-error(Args) ->
-	erlang:error(Args).
+error(Reason) ->
+	platten_log_server:log(error,Reason).
 
-format(A, B) ->
-	io:format(A,B).
+format(Reason) ->
+	platten_log_server:log(debug,Reason).

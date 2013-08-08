@@ -36,13 +36,15 @@
 
 -define(REDIRECT_URI, "http://lucas.yunio.com:8001").
 -define(GRANT_TYPE, "authorization_code").
+-define(LOG_FILE, "/home/lucas/platten.log").
 
 
 -define(handle(Res),
 	case Res of
 		{ok, {_,_,Bodys}} ->
+%				platten_log:format(platten_util:to_l(Bodys)),
 				Bodys;
 		{error, Reason} ->
-				platten_log:format("~p Accoure Error ~p ~n",[erlang:time(),Reason]),
+				platten_log:error(platten_util:to_l(Reason)),
 				{error,Reason}
 	end).

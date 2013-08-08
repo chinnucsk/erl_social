@@ -24,5 +24,22 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    {ok, { {one_for_one, 5, 10}, []} }.
+	Procs = procs([platten_log_server],[]),
+    {ok, { {one_for_one, 5, 10}, Procs} }.
 
+-spec procs([module()|{sup, module()}], [supervisor:child_spec()])
+    -> [supervisor:child_spec()].
+procs([], Acc) ->
+    lists:reverse(Acc);
+procs([{sup, Module}|Tail], Acc) ->
+    procs(Tail, [sup(Module)|Acc]);
+procs([Module|Tail], Acc) ->
+    procs(Tail, [worker(Module)|Acc]).
+
+-spec worker(M) -> {M, {M, start_link, []}, permanent, 5000, worker, dynamic}.
+worker(Module) ->
+    {Module, {Module, start_link, []}, permanent, 5000, worker, dynamic}.
+
+-spec sup(M) -> {M, {M, start_link, []}, permanent, 5000, supervisor, [M]}.
+sup(Module) ->
+    {Module, {Module, start_link, []}, permanent, 5000, supervisor, [Module]}.
