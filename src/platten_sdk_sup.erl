@@ -24,7 +24,8 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-	Procs = procs([platten_log_server],[]),
+%	Procs = procs([platten_log_server],[]),
+	Procs = procs([],[]),
     {ok, { {one_for_one, 5, 10}, Procs} }.
 
 -spec procs([module()|{sup, module()}], [supervisor:child_spec()])
