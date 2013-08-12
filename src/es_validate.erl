@@ -28,7 +28,7 @@ qq_validate(Uid,Token) ->
 
 douban_validate(Uid,Token) ->
 	{Id,_} = es_douban:info([{access_token,erl_social_util:to_l(Token)}]),
-	case erl_social_util:to_l(Id) == Uid of
+	case Id == Uid of
 		true ->
 			true;
 		false ->
