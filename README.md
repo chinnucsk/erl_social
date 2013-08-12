@@ -61,23 +61,31 @@ The Parameter instructions delcars in erl_social.erl.
 * make && ./start.sh 
 
 * erl_social:oauth(sina,Args).
+
   erl_social:oauth(qq,Args).
+
   erl_social:oauth(douban,Args).
 
 * erl_social:user(sina, Args).
+
   erl_social:user(qq, Args).
+
   erl_social:user(douban, Args).
 
 * erl_social:friendship(Args).
 
 * erl_social:blog(sina,Args).
+
   erl_social:blog(qq,Args).
 
 * erl_social:blog_pic(sina,Args).
+
   erl_social:blog_pic(qq,Args).
 
 * erl_social:qzone_share(Args).
 
 * erl_social:validate(sina,Uid,Token).
+
   erl_social:validate(qq,Uid,Token).
+
   erl_social:validate(douban,Uid,Token).
