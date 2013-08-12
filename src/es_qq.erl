@@ -13,10 +13,10 @@
 
 -spec oauth(list(tuple())) -> any().
 oauth(Args) ->
-    AppKey = erl_social:get_env(qq,app_key),
-    AppSecret = erl_social:get_env(qq,app_secret),
-    GrantType = erl_social:get_env(qq,grant_type),
-    Url = erl_social:get_env(qq,url),
+    AppKey = erl_social_util:get_env(qq,app_key),
+    AppSecret = erl_social_util:get_env(qq,app_secret),
+    GrantType = erl_social_util:get_env(qq,grant_type),
+    Url = erl_social_util:get_env(qq,url),
 	Args1 = erl_social_util:set_all_key([{client_id, AppKey},
 								{client_secret, AppSecret},
 								{grant_type, GrantType},

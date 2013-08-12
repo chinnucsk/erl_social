@@ -13,10 +13,10 @@
 
 -spec oauth(list(tuple())) -> any().
 oauth(Args) ->
-	AppKey = erl_social:get_env(sina,app_key),
-	AppSecret = erl_social:get_env(sina,app_secret),
-	GrantType = erl_social:get_env(sina,grant_type),
-	Url = erl_social:get_env(sina,url),
+	AppKey = erl_social_util:get_env(sina,app_key),
+	AppSecret = erl_social_util:get_env(sina,app_secret),
+	GrantType = erl_social_util:get_env(sina,grant_type),
+	Url = erl_social_util:get_env(sina,url),
 	Args1 = erl_social_util:set_all_key([{client_id, AppKey},
 								{client_secret, AppSecret},
 								{grant_type, GrantType},
