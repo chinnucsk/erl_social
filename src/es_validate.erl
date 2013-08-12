@@ -7,9 +7,9 @@
 		]).
 
 sina_validate(Uid,Token) ->
-	Body = erl_sina:info([[access_token,binary_to_list(Token)]]),
+	Body = erl_sina:info([[access_token,erl_social_util:to_l(Token)]]),
 	DBody = erl_social_util:decode_body(Body),
-	Id = erl_social_util:get_key(<<"id">>,DBdoy),
+	Id = erl_social_util:get_key(<<"id">>,DBody),
 	case Uid == Id of
 		true ->
 			true;
@@ -18,7 +18,7 @@ sina_validate(Uid,Token) ->
 	end.
 
 qq_validate(Uid,Token) ->
-	OpenId = es_qq:get_openid(binary_to_list(Token)),
+	OpenId = es_qq:get_openid(erl_social_util:to_l(Token)),
 	case OpenId == Uid of
 		true ->
 			true;
@@ -27,8 +27,8 @@ qq_validate(Uid,Token) ->
 	end.
 
 douban_validate(Uid,Token) ->
-	{Id,_} = es_douban:info([{access_token,binary_to_list(Token)}]),
-	case bianry_to_list(Id) == Uid of
+	{Id,_} = es_douban:info([{access_token,erl_social_util:to_l(Token)}]),
+	case erl_social_util:to_l(Id) == Uid of
 		true ->
 			true;
 		false ->

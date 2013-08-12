@@ -90,7 +90,7 @@ blog_pic_url(Args) ->
         end,
     Res.
 
--spec create(list(tuple())) -> any().
+-spec create_friendship(list(tuple())) -> any().
 create_friendship(Args) ->
     ok = check_uid_name_exist(Args),
     Args1 = erl_social_util:set_all_key([{access_token, ""}], Args),

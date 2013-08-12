@@ -31,7 +31,7 @@ oauth(Args) ->
 info(Args) ->
     Token = erl_social_util:get_key(access_token, Args, ""),
     OpenId = get_openid(Token),
-    OauthConsumerKey = ?APP_KEY_QQ,
+    OauthConsumerKey = erl_social:get_env(qq,app_key),
     Path = "/user/get_simple_userinfo?access_token=" ++ Token ++ "&oauth_consumer_key=" ++ OauthConsumerKey ++ "&openid=" ++ erl_social_util:to_l(OpenId),
     Body = ?handle(erl_social_util:req({get, {qq,Path}, [], []})),
     Res = erl_social_util:decode_body(Body),

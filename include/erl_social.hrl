@@ -11,10 +11,10 @@
 				{error,Reason}
 	end).
 
--define(check_value(Res)
+-define(check_value(Res),
 	case Res of
 		{error,Reason} ->
-			throw({error,Error});
+			throw({error,Reason});
 		_ ->
 			Res
 	end).
