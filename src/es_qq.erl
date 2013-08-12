@@ -24,7 +24,7 @@ oauth(Args) ->
 								{redirect_uri, Url}], Args),
 	Path = "/oauth2.0/token",
 	BodyReq =erl_social_util:create_body(Args1),
-	Body = ?handle(erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(url)], BodyReq})),
+	Body = ?handle(?MODULE,erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(url)], BodyReq})),
 	get_token(Body).
 
 -spec info(list(tuple())) -> any().
@@ -33,13 +33,13 @@ info(Args) ->
     OpenId = get_openid(Token),
     OauthConsumerKey = erl_social:get_env(qq,app_key),
     Path = "/user/get_simple_userinfo?access_token=" ++ Token ++ "&oauth_consumer_key=" ++ OauthConsumerKey ++ "&openid=" ++ erl_social_util:to_l(OpenId),
-    Body = ?handle(erl_social_util:req({get, {qq,Path}, [], []})),
+    Body = ?handle(?MODULE,erl_social_util:req({get, {qq,Path}, [], []})),
     Res = erl_social_util:decode_body(Body),
     {erl_social_util:to_l(OpenId), Res}.
 
 get_openid(Token) ->
     Path = "/oauth2.0/me?access_token=" ++ Token,
-    Body = ?handle(erl_social_util:req({get, {qq,Path}, [], []})),
+    Body = ?handle(?MODULE,erl_social_util:req({get, {qq,Path}, [], []})),
     [_,Body1,_] = string:tokens(erl_social_util:to_l(Body)," "),
     Res = erl_social_util:decode_body(list_to_binary(Body1)),
     erl_social_util:get_key(<<"openid">>, Res).
@@ -55,7 +55,7 @@ blog(Args) ->
                                 {content,""}], Args),
     Path = "/t/add_t",
     BodyReq = erl_social_util:create_body(Args1),
-    Res = case ?handle(erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(url)], BodyReq})) of
+    Res = case ?handle(?MODULE,erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(url)], BodyReq})) of
         {error,_} ->
             failed;
         _ ->
@@ -82,7 +82,7 @@ blog_pic(Args) ->
     Files = [{pic, PicPath, PicBin}],
     BodyReq = erl_social_util:format_multipart_formdata(Boundary, Args2, Files, erl_social_util:to_l(Ctype)),
     Length = integer_to_list(length(BodyReq)),
-    Res = case ?handle(erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(Boundary),erl_social_util:header(Length)], BodyReq})) of
+    Res = case ?handle(?MODULE,erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(Boundary),erl_social_util:header(Length)], BodyReq})) of
         {error,_} ->
             failed;
         _ ->
@@ -104,7 +104,7 @@ zone_share(Args) ->
                                 {fromurl,""}], Args),
     Path = "/share/add_share",
     BodyReq = erl_social_util:create_body(Args1),
-    Res = case ?handle(erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(url)], BodyReq})) of
+    Res = case ?handle(?MODULE,erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(url)], BodyReq})) of
         {error,_} ->
             failed;
         _ ->

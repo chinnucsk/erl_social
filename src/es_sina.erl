@@ -24,7 +24,7 @@ oauth(Args) ->
 								{redirect_uri, Url}], Args),
 	Path = "/oauth2/access_token",
 	BodyReq = erl_social_util:create_body(Args1),
-	Body = ?handle(erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(url)], BodyReq})),
+	Body = ?handle(?MODULE,erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(url)], BodyReq})),
 	List = erl_social_util:decode_body(Body),
 	AccessToken  = erl_social_util:to_l(erl_social_util:get_key(<<"access_token">>, List)),
 	Uid  = erl_social_util:to_l(erl_social_util:get_key(<<"uid">>, List)),
@@ -35,7 +35,7 @@ info(Args) ->
     {Name, Value} = get_value(Args),
     Path = "/users/show.json" ++ "?access_token=" ++ Token ++
             "&" ++ Name ++ "=" ++ Value,
-    Body = ?handle(erl_social_util:req({get, {sina,Path}, [erl_social_util:ct(json)], []})),
+    Body = ?handle(?MODULE,erl_social_util:req({get, {sina,Path}, [erl_social_util:ct(json)], []})),
     erl_social_util:decode_body(Body).
 
 -spec blog(list(tuple())) -> any().
@@ -44,7 +44,7 @@ blog(Args) ->
                                 {status, ""}], Args),
     Path = "/2/statuses/update.json",
     BodyReq = erl_social_util:create_body(Args1),
-    Res = case ?handle(erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(url)], BodyReq})) of
+    Res = case ?handle(?MODULE,erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(url)], BodyReq})) of
         {error,_} ->
             failed;
         _ ->
@@ -67,7 +67,7 @@ blog_pic(Args) ->
     BodyReq = erl_social_util:format_multipart_formdata(Boundary, Args2, Files, erl_social_util:to_l(Ctype)),
     Length = integer_to_list(length(BodyReq)),
     Res1 = erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(Boundary), erl_social_util:header(Length)], BodyReq}),
-    Res = case ?handle(Res1) of
+    Res = case ?handle(?MODULE,Res1) of
         {error,_} ->
             failed;
         _ ->
@@ -82,7 +82,7 @@ blog_pic_url(Args) ->
                                    {url, ""}], Args),
     Path = "/2/statuses/upload_url_text.json",
     BodyReq = erl_social_util:create_body(Args1),
-    Res = case ?handle(erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(url)], BodyReq})) of
+    Res = case ?handle(?MODULE,erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(url)], BodyReq})) of
         {error,_} ->
             failed;
         _ ->
@@ -96,7 +96,7 @@ create_friendship(Args) ->
     Args1 = erl_social_util:set_all_key([{access_token, ""}], Args),
     Path = "/friendships/create.json",
     BodyReq = erl_social_util:create_body(Args1),
-    Body = ?handle(erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(url)], BodyReq})),
+    Body = ?handle(?MODULE,erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(url)], BodyReq})),
     erl_social_util:decode_body(Body).
 
 %%% ==================================================================
