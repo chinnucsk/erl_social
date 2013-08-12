@@ -78,4 +78,6 @@ The Parameter instructions delcars in erl_social.erl.
 
 * erl_social:qzone_share(Args).
 
-
+* erl_social:validate(sina,Uid,Token).
+  erl_social:validate(qq,Uid,Token).
+  erl_social:validate(douban,Uid,Token).
