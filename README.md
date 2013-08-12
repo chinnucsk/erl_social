@@ -9,9 +9,8 @@ Mainly,including QQ,Sina,Douban.
 
 Introduce
 -------------
-The erl_social.hrl mainly define the default value for the corresponding platform.
 
-Platten_util.erl is a tool for our application. 
+erl_social.erl is a tool for our application. 
 
 * _oauth for oauth.
 
@@ -20,6 +19,11 @@ Platten_util.erl is a tool for our application.
 * _blog for send a status to the platform.
 
 * _log for debug infomations.
+
+Configure
+--------------
+
+The configure file are in priv, named app.config. You can modify it according your need.
 
 Attention
 ------------
