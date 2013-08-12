@@ -1,12 +1,13 @@
 -module(erl_social_log).
 
 -export([
-		error/1,
-		format/1
+		error/2,
+		format/2
 		]).
 
-error(Reason) ->
-	erl_social_log_server:log(error,Reason).
+error(Module,Reason) ->
+	erl_social_log_server:log(error,Module,Reason).
 
-format(Reason) ->
-	erl_social_log_server:log(debug,Reason).
+format(Module,Reason) ->
+	erl_social_log_server:log(debug,Module,Reason).
+	

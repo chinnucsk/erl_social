@@ -1,6 +1,8 @@
 -module(erl_social_util).
 
--export([get_key/2,
+-export([
+		 get_env/2,
+		 get_key/2,
 		 get_key/3,
 		 getout_key/2,
 		 set_key/3,
@@ -12,8 +14,14 @@
 		 header/1,
 		 create_body/1,
 		 format_multipart_formdata/4,
-		 to_l/1
+		 to_l/1,
+		 get_time/0
 		 ]).
+
+get_env(Provider,Type) ->
+	List = application:get_env(erl_social,providers),
+	TValue = proplists:get_value(Provider,List),
+	proplists:get_value(Type,TValue).
 
 getout_key(Key, Args) ->
 	Pic = get_key(Key, Args),
@@ -40,7 +48,7 @@ set_key(Key, Args, Default) ->
 	end.
 
 set_all_key([], Args) ->
-	Args;
+	check_if_null(Args,[]);
 set_all_key([{status, Default}|Rest], Args) ->
 	Args1 = set_key(status, Args, Default),
 	set_all_key(Rest, set_uri_key(status, Args1));
@@ -55,6 +63,15 @@ set_uri_key(Key, Args) ->
 		{Key, Value} ->
 			lists:keyreplace(Key, 1, Args, {Key, http_uri:encode(Value)})
 	end.
+
+check_if_null([],Acc) ->
+	lists:reverse(Acc);
+check_if_null([{Key,Value}|Rest],Acc) when Value == "" ->
+	Reason = atom_to_list(Key) ++ "is null",
+	erl_social_log:error(?MODULE,Reason),
+	?check_value({error,Reason});
+check_if_null([{Key,Value}|Rest],Acc) ->
+	check_if_null(Rest, [{Key,Value}|Acc]).
 
 create_body(Args) ->
 	Args1 = do_create_body(Args, []),
@@ -121,6 +138,10 @@ to_l(Key) when is_atom(Key) ->
 	erlang:atom_to_list(Key);
 to_l(Key) when is_binary(Key) ->
 	erlang:binary_to_list(Key).
+
+get_time()->
+	{{A1,A2,A3},{B1,B2,B3}} = calendar:now_to_local_time(os:timestamp()),
+	integer_to_list(A1) ++ "year" ++ integer_to_list(A2) ++ "month" ++ integer_to_list(A3) day ++ integer_to_list(B1) ++ "hour" ++ integer_to_list(B2) ++ "min" ++ integer_to_list(B3) ++ "sec".
 
 %%% ===============================================================
 %%% private
