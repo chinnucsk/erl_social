@@ -21,7 +21,7 @@
 -include("erl_social.hrl").
 
 get_env(Provider,Type) ->
-	List = application:get_env(erl_social,providers),
+	{ok,List} = application:get_env(erl_social,providers),
 	TValue = proplists:get_value(Provider,List),
 	proplists:get_value(Type,TValue).
 

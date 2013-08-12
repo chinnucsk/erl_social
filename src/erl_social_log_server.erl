@@ -31,7 +31,7 @@ log(Type,Module,Info) ->
 %%% =================================================================
 
 init([]) ->
-	LogFile = application:get_env(erl_social,logfile),
+	{ok,LogFile} = application:get_env(erl_social,logfile),
 	{ok,Io} = file:open(LogFile, [read,write,append]),
 	{ok, #state{io=Io}}.
 
