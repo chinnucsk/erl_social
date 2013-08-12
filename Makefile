@@ -4,7 +4,10 @@ REBAR :=rebar
 
 all:app
 
-app:deps
+app:compile
+	@$(REBAR) compile
+
+compile:deps
 
 deps: 
 	@$(REBAR) get-deps

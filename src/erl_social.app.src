@@ -1,0 +1,12 @@
+{application, erl_social,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { erl_social_app, []}},
+  {env, []}
+ ]}.

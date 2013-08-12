@@ -1,7 +1,7 @@
-platten sdk
+erl_social
 ============
 
-Platten_sdk is a sdk for connecting the thrid platform.
+Erl_social is a sdk for connecting the thrid platform.
 
 We can login ,get user info and send messages on third platform.
 
@@ -9,7 +9,7 @@ Mainly,including QQ,Sina,Douban.
 
 Introduce
 -------------
-The platten.hrl mainly define the default value for the corresponding platform.
+The erl_social.hrl mainly define the default value for the corresponding platform.
 
 Platten_util.erl is a tool for our application. 
 
@@ -40,38 +40,38 @@ The Third Platten Url
 Log 
 ------------
 
-Server start a log server called platten_log_server, you can define the log path in include file(`paras` LOG_FILE).
+Server start a log server called erl_social_log_server, you can define the log path in include file(`paras` LOG_FILE).
 
-platten_log:error/1, will print error type infos.
+erl_social_log:error/1, will print error type infos.
 
-platten_log:format/1, will print debug type infos.
+erl_social_log:format/1, will print debug type infos.
 
 How To Use
 ------------
 
-The parameter of args is tuple list, if you didn't define, some paras will use the default in platten.hrl.
+The parameter of args is tuple list, if you didn't define, some paras will use the default in erl_social.hrl.
 
-The Parameter instructions delcars in platten_sdk.erl.
+The Parameter instructions delcars in erl_social.erl.
 
 
 * make && ./start.sh 
 
-* platten_sdk:oauth(sina,Args).
-  platten_sdk:oauth(qq,Args).
-  platten_sdk:oauth(douban,Args).
+* erl_social:oauth(sina,Args).
+  erl_social:oauth(qq,Args).
+  erl_social:oauth(douban,Args).
 
-* platten_sdk:user(sina, Args).
-  platten_sdk:user(qq, Args).
-  platten_sdk:user(douban, Args).
+* erl_social:user(sina, Args).
+  erl_social:user(qq, Args).
+  erl_social:user(douban, Args).
 
-* platten_sdk:friendship(Args).
+* erl_social:friendship(Args).
 
-* platten_sdk:blog(sina,Args).
-  platten_sdk:blog(qq,Args).
+* erl_social:blog(sina,Args).
+  erl_social:blog(qq,Args).
 
-* platten_sdk:blog_pic(sina,Args).
-  platten_sdk:blog_pic(qq,Args).
+* erl_social:blog_pic(sina,Args).
+  erl_social:blog_pic(qq,Args).
 
-* platten_sdk:qzone_share(Args).
+* erl_social:qzone_share(Args).
 
 
