@@ -9,15 +9,16 @@
 		blog/2,
 		blog_pic/2,
 		blog_pic_url/2,
-		qzone_share/1
+		qzone_share/1,
+		validate/3
 		]).
+
+-type provider()::sina|qq|douban.
 
 start() ->
 	application:start(?MODULE).
 
-%% oauth(sina,Args::[{client_id,Value::list()},{client_secret,Value::list()},{grant_type,Value::list()},{code,Value::list()},{redirect_uri,Value::list()}]) -> {Uid::list(),AccessToken::list()}.
-%% oauth(qq,Args::[{client_id,Value::list()},{client_secret,Value::list()},{grant_type,Value::list()},{code,Value::list()},{redirect_uri,Value::list()}]) -> AccessToken::list().
-%% oauth(douban,Args::[{client_id,Value::list()},{client_secret,Value::list()},{grant_type,Value::list()},{code,Value::list()},{redirect_uri,Value::list()}]) -> AccessToken::list().
+%% oauth(provider(),Args::[{client_id,Value::list()},{client_secret,Value::list()},{grant_type,Value::list()},{code,Value::list()},{redirect_uri,Value::list()}]) -> AccessToken::list().
 oauth(sina,Args) ->
 	es_sina:oauth(Args);
 oauth(qq,Args) ->
@@ -39,7 +40,7 @@ user(douban,Args) ->
 friendship(Args) ->
 	es_sina:create_friendship(Args).
 
-%% blog(Args::[{access_token,Value::list()},{status,Value::list()}]) -> Res::success|failed.
+%% blog(provider(),Args::[{access_token,Value::list()},{status,Value::list()}]) -> Res::success|failed.
 blog(sina,Args) ->
 	es_sina:blog(Args);
 blog(qq,Args) ->
@@ -61,3 +62,10 @@ blog_pic_url(sina,Args) ->
 qzone_share(Args) ->
 	es_qq:zone_share(Args).
 
+%% validate(provider(),Uid::binary(),Token::binary()) -> boolean().
+validate(sina,Uid,Token) ->
+	es_validate:sina_validate(Uid,Token);
+validate(qq,Uid,Token) ->
+	es_validate:qq_validate(Uid,Token);
+validate(douban,Uid,Token) ->
+	es_validate:douban_validate(Uid,Token).

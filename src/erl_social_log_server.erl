@@ -31,7 +31,7 @@ log(Type,Module,Info) ->
 %%% =================================================================
 
 init([]) ->
-	LogFile = application:get_env(erl_social,logfile),
+	{ok,LogFile} = application:get_env(erl_social,logfile),
 	{ok,Io} = file:open(LogFile, [read,write,append]),
 	{ok, #state{io=Io}}.
 
@@ -41,12 +41,12 @@ terminate(_Reason, #state{io=Io}) ->
 
 handle_call({debug,Module,Info}, _From, #state{io=Io}=State) ->
 	Time = erl_social_util:get_time(),
-	Res = Time ++ " [debug] module (" ++ erl_social_util:to_l(Module) ++  ") info " ++ Info,
+	Res = Time ++ " [debug] module (" ++ erl_social_util:to_l(Module) ++  ") info " ++ Info ++ "\r\n",
 	Return = file:write(Io, Res),
 	{reply, Return, State};
 handle_call({error,Module,Info}, _From, #state{io=Io}=State) ->
 	Time = erl_social_util:get_time(),
-	Res = Time ++ " [error] module (" ++ erl_social_util:to_l(Module) ++  ") info " ++ Info,
+	Res = Time ++ " [error] module (" ++ erl_social_util:to_l(Module) ++  ") info " ++ Info ++ "\r\n",
 	Return = file:write(Io, Res),
 	{reply, Return, State}.
 

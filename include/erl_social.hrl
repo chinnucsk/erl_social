@@ -1,13 +1,13 @@
--define(handle(Res),
+-define(handle(Module,Res),
 	case Res of
 		{ok, {{200,_},_,Bodys}} ->
-				erl_social_log:format(erl_social_util:to_l(Bodys)),
+				erl_social_log:format(Module,erl_social_util:to_l(Bodys)),
 				Bodys;
 		{ok, {_,_,Bodys}} ->
-				erl_social_log:format(erl_social_util:to_l(Bodys)),
+				erl_social_log:format(Module,erl_social_util:to_l(Bodys)),
 				Bodys;
 		{error, Reason} ->
-				erl_social_log:error(erl_social_util:to_l(Reason)),
+				erl_social_log:error(Module,erl_social_util:to_l(Reason)),
 				{error,Reason}
 	end).
 

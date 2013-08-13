@@ -21,7 +21,7 @@
 -include("erl_social.hrl").
 
 get_env(Provider,Type) ->
-	List = application:get_env(erl_social,providers),
+	{ok,List} = application:get_env(erl_social,providers),
 	TValue = proplists:get_value(Provider,List),
 	proplists:get_value(Type,TValue).
 
@@ -143,7 +143,7 @@ to_l(Key) when is_binary(Key) ->
 
 get_time()->
 	{{A1,A2,A3},{B1,B2,B3}} = calendar:now_to_local_time(os:timestamp()),
-	integer_to_list(A1) ++ "year" ++ integer_to_list(A2) ++ "month" ++ integer_to_list(A3) ++ "day" ++ integer_to_list(B1) ++ "hour" ++ integer_to_list(B2) ++ "min" ++ integer_to_list(B3) ++ "sec".
+	integer_to_list(A1) ++ "-" ++ integer_to_list(A2) ++ "-" ++ integer_to_list(A3) ++ "  " ++ integer_to_list(B1) ++ "-" ++ integer_to_list(B2) ++ "-" ++ integer_to_list(B3) ++ "  ".
 
 %%% ===============================================================
 %%% private
