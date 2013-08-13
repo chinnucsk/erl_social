@@ -60,7 +60,7 @@ blog_pic_url(sina,Args) ->
 
 %% qzone_share(Args::[{access_token,Value::list()},{oauth_consumer_key,Value::list()},{openid,Value::list()},{format,Value::json|xml},{title,Value::list()},{url,Value::list()},{site,Value::list()},{fromurl,Value::list()}]) -> Res::success|failed.
 qzone_share(Args) ->
-	es_qq:zone_share(Args).
+	es_qzone:share(Args).
 
 %% validate(provider(),Uid::binary(),Token::binary()) -> boolean().
 validate(sina,Uid,Token) ->

@@ -34,7 +34,7 @@ Use the Code to get access_token.
 
 Use the access_token to get user_info or send messages or other things.
 
-The Third Platten Url
+The Third Platform Url
 -----------
 
 * [sina develop url](http://open.weibo.com/wiki/%E5%BE%AE%E5%8D%9AAPI) <br />
