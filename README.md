@@ -12,13 +12,21 @@ Introduce
 
 erl_social.erl is a tool for our application. 
 
-* _oauth for oauth.
+* oauth/2: for getting access_token.
 
-* _user for get userinfo.
+* user/2: for getting user infomations.
 
-* _blog for send a status to the platform.
+* blog/2: for sending a status to the platform.
 
-* _log for debug infomations.
+* blog_pic/2: for sending a status and pictures to the platform.
+
+* blog_pic_url/2: for sending a url and status to the sina blog.
+
+* friendship/1: for creatting freiendship on sina blog.
+
+* qzone_share/1: for sending a url and status to qzone and qq blog.
+
+* validate/3: for validating the Token and Uid whether is right .
 
 Configure
 --------------
@@ -44,18 +52,28 @@ The Third Platform Url
 Log 
 ------------
 
-Server start a log server called erl_social_log_server, you can define the log path in include file(`paras` LOG_FILE).
+Server start a log server called erl_social_log_server, you can define the log path in priv/app.config ,named logfile.
 
-erl_social_log:error/1, will print error type infos.
+erl_social_log:error/2, will print error type infos.
 
-erl_social_log:format/1, will print debug type infos.
+```javascript
+	example:
+	2013-8-13  11-13-33   [error] module (es_sina) info lacking uid or screen_name
 
+```
+
+erl_social_log:format/2, will print debug type infos.
+
+```javascript
+	example:
+		2013-8-13  11-53-24   [debug] module (es_qzone) info {"ret":0,"msg":"ok","share_id":1376366004}
+```
 How To Use
 ------------
 
 The parameter of args is tuple list, if you didn't define, some paras will use the default in erl_social.hrl.
 
-The Parameter instructions delcars in erl_social.erl.
+The Parameter instructions declare in erl_social.erl.
 
 
 * make && ./start.sh 
