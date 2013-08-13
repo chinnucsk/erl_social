@@ -46,8 +46,8 @@ get_openid(Token) ->
 
 -spec blog(list(tuple())) -> any().
 blog(Args) ->
-    Format = erl_social:get_env(qq,format),
-    AppKey = erl_social:get_env(qq,app_key),
+    Format = erl_social_util:get_env(qq,format),
+    AppKey = erl_social_util:get_env(qq,app_key),
     Args1 = erl_social_util:set_all_key([{access_token, ""},
                                 {oauth_consumer_key,AppKey},
                                 {openid,""},
@@ -65,8 +65,8 @@ blog(Args) ->
 
 -spec blog_pic(list(tuple())) -> any().
 blog_pic(Args) ->
-    Format = erl_social:get_env(qq,format),
-    AppKey = erl_social:get_env(qq,app_key),
+    Format = erl_social_util:get_env(qq,format),
+    AppKey = erl_social_util:get_env(qq,app_key),
     Args1 = erl_social_util:set_all_key([{access_token, ""},
                                    {oauth_consumer_key, AppKey},
                                    {openid, ""},
@@ -92,8 +92,8 @@ blog_pic(Args) ->
 
 -spec zone_share(list(tuple())) -> any().
 zone_share(Args) ->
-    Format = erl_social:get_env(qq,format),
-    AppKey = erl_social:get_env(qq,app_key),
+    Format = erl_social_util:get_env(qq,format),
+    AppKey = erl_social_util:get_env(qq,app_key),
     Args1 = erl_social_util:set_all_key([{access_token, ""},
                                 {oauth_consumer_key,AppKey},
                                 {openid,""},
