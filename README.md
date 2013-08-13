@@ -58,7 +58,7 @@ erl_social_log:error/2, will print error type infos.
 
 ```javascript
 	example:
-	2013-8-13  11-13-33   [error] module (es_sina) info lacking uid or screen_name
+		2013-8-13  11-13-33   [error] module (es_sina) info lacking uid or screen_name
 
 ```
 
