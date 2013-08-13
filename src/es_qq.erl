@@ -10,6 +10,8 @@
 
 -include("erl_social.hrl").
 
+%% @spec oauth(list(tuple())) -> any()
+%% @doc qq get access_token.
 -spec oauth(list(tuple())) -> any().
 oauth(Args) ->
     AppKey = erl_social_util:get_env(qq,app_key),
@@ -26,6 +28,8 @@ oauth(Args) ->
 	Body = ?handle(?MODULE,erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(url)], BodyReq})),
 	get_token(Body).
 
+%% @spec info(list(tuple())) -> any()
+%% @doc qq get user infomations. 
 -spec info(list(tuple())) -> any().
 info(Args) ->
     Token = erl_social_util:get_key(access_token, Args, ""),
@@ -36,6 +40,9 @@ info(Args) ->
     Res = erl_social_util:decode_body(Body),
     {erl_social_util:to_l(OpenId), Res}.
 
+%% @spec get_openid(list()) -> any()
+%% @doc qq get openid.
+-spec get_openid(list()) -> any().
 get_openid(Token) ->
     Path = "/oauth2.0/me?access_token=" ++ Token,
     Body = ?handle(?MODULE,erl_social_util:req({get, {qq,Path}, [], []})),
@@ -43,6 +50,8 @@ get_openid(Token) ->
     Res = erl_social_util:decode_body(list_to_binary(Body1)),
     erl_social_util:get_key(<<"openid">>, Res).
 
+%% @spec blog(list(tuple())) -> any()
+%% @doc qq post microblog.
 -spec blog(list(tuple())) -> any().
 blog(Args) ->
     Format = erl_social_util:get_env(qq,format),
@@ -62,6 +71,8 @@ blog(Args) ->
         end,
     Res.
 
+%% @spec blog_pic(list(tuple())) -> any()
+%% @doc qq post microblog with pictures.
 -spec blog_pic(list(tuple())) -> any().
 blog_pic(Args) ->
     Format = erl_social_util:get_env(qq,format),

@@ -7,6 +7,8 @@
 
 -include("erl_social.hrl").
 
+%% @spec oauth(list(tuple())) -> any()
+%% @doc douban get access_token.
 -spec oauth(list(tuple())) -> any().
 oauth(Args) ->
     AppKey = erl_social_util:get_env(douban,app_key),
@@ -24,6 +26,8 @@ oauth(Args) ->
 	List = erl_social_util:decode_body(Body),
 	erl_social_util:to_l(erl_social_util:get_key(<<"access_token">>, List)).
 
+%% @spec info(list(tuple())) -> any()
+%% @doc douban get user infomations.
 -spec info(list(tuple())) -> any().
 info(Args) ->
     Token = erl_social_util:get_key(access_token, Args, ""),

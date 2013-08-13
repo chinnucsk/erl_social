@@ -128,7 +128,6 @@ encode_body(Args) ->
 decode_body(Args) ->
 	jsx:decode(Args, [{labels, binary}]).
 
-%% @doc multipart formata body.
 format_multipart_formdata(Boundary, Fields, Files, Ctype) ->
     FieldParts = lists:map(fun({FieldName, FieldContent}) ->
                                    [lists:concat(["--", Boundary]),
@@ -149,7 +148,6 @@ format_multipart_formdata(Boundary, Fields, Files, Ctype) ->
     Parts = lists:append([FieldParts2, FileParts2, EndingParts]),
     string:join(Parts, "\r\n").
 
-%% @doc turn value to list.
 to_l(Key) when is_list(Key) ->
 	Key;
 to_l(Key) when is_atom(Key) ->
@@ -159,7 +157,6 @@ to_l(Key) when is_integer(Key) ->
 to_l(Key) when is_binary(Key) ->
 	erlang:binary_to_list(Key).
 
-%% @doc get the currend value ,and put out as list.
 get_time()->
 	{{A1,A2,A3},{B1,B2,B3}} = calendar:now_to_local_time(os:timestamp()),
 	integer_to_list(A1) ++ "-" ++ integer_to_list(A2) ++ "-" ++ integer_to_list(A3) ++ "  " ++ integer_to_list(B1) ++ "-" ++ integer_to_list(B2) ++ "-" ++ integer_to_list(B3) ++ "  ".

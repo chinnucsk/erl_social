@@ -6,6 +6,8 @@
 
 -include("erl_social.hrl").
 
+%% @spec share(list(tuple())) -> any()
+%% @doc qq post share with url to microblog and qqzone.
 -spec share(list(tuple())) -> any().
 share(Args) ->
     Format = erl_social_util:get_env(qq,format),

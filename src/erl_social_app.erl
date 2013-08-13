@@ -9,11 +9,13 @@
 %% Application callbacks
 %% ===================================================================
 
+%% @doc start the erl_social application.
 start(_StartType, _StartArgs) ->
 	inets:start(),
 	ssl:start(),
 	lhttpc:start(),
     erl_social_sup:start_link().
 
+%% @doc stop the erl_social application.
 stop(_State) ->
     ok.

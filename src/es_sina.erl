@@ -12,6 +12,8 @@
 
 -include("erl_social.hrl").
 
+%% @spec oauth(list(tuple())) -> any()
+%% @doc sina get access_token.
 -spec oauth(list(tuple())) -> any().
 oauth(Args) ->
 	AppKey = erl_social_util:get_env(sina,app_key),
@@ -31,6 +33,9 @@ oauth(Args) ->
 	Uid  = erl_social_util:to_l(erl_social_util:get_key(<<"uid">>, List)),
 	{Uid, AccessToken}.
 
+%% @spec info(list(tuple())) -> any() 
+%% @doc sina get user infomations.
+-spec info(list(tuple())) -> any(). 
 info(Args) ->
     Token = erl_social_util:get_key(access_token, Args, ""),
     {Name, Value} = get_value(Args),
@@ -39,6 +44,8 @@ info(Args) ->
     Body = ?handle(?MODULE,erl_social_util:req({get, {sina,Path}, [erl_social_util:ct(json)], []})),
     erl_social_util:decode_body(Body).
 
+%% @spec blog(list(tuple())) -> any()
+%% @doc sina post microblog.
 -spec blog(list(tuple())) -> any().
 blog(Args) ->
     Args1 = erl_social_util:set_all_key([{access_token, ""},
@@ -53,6 +60,8 @@ blog(Args) ->
         end,
     Res.
 
+%% @spec blog_pic(list(tuple())) -> any()
+%% @doc sina post microblog with pictures.
 -spec blog_pic(list(tuple())) -> any().
 blog_pic(Args) ->
     Args1 = erl_social_util:set_all_key([{access_token, ""},
@@ -76,6 +85,8 @@ blog_pic(Args) ->
     end,
     Res.
 
+%% @spec blog_pic_url(list(tuple())) -> any()
+%% @doc sina post microblog with url.
 -spec blog_pic_url(list(tuple())) -> any().
 blog_pic_url(Args) ->
     Args1 = erl_social_util:set_all_key([{access_token, ""},
@@ -91,6 +102,8 @@ blog_pic_url(Args) ->
         end,
     Res.
 
+%% @spec create_friendship(list(tuple())) -> any()
+%% @doc sina create friendship.
 -spec create_friendship(list(tuple())) -> any().
 create_friendship(Args) ->
     ok = check_uid_name_exist(Args),
@@ -104,6 +117,8 @@ create_friendship(Args) ->
 			success
 	end.
 
+%% @spec get_token_info(list()) -> binary()
+%% @doc lookup the token infomations and return uid.
 -spec get_token_info(list()) -> binary().
 get_token_info(Token) ->
 	Path = "/oauth2/get_token_info?access_token="++Token,

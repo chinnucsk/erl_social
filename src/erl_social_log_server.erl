@@ -20,9 +20,13 @@
 
 -record(state, {io}).
 
+%% @spec start_link() -> pid()
+%% @doc start gen server.
 start_link() ->
 	gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
-
+%% @type logtype() =debug|error
+%% @spec log(logtype(),any(),list()) -> ok | {error, file:posix() | badarg | terminated}
+%% @doc log the info with type,module in the logfile. 
 log(Type,Module,Info) ->
 	gen_server:call(?MODULE,{Type,Module,Info}).
 

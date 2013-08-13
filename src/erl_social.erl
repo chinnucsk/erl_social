@@ -13,12 +13,13 @@
 		validate/3
 		]).
 
--type provider()::sina|qq|douban.
+%% @type provider()=sina|qq|douban.
 
 start() ->
 	application:start(?MODULE).
 
-%% oauth(provider(),Args::[{client_id,Value::list()},{client_secret,Value::list()},{grant_type,Value::list()},{code,Value::list()},{redirect_uri,Value::list()}]) -> AccessToken::list().
+%% @spec oauth(provider(),Args::[{client_id,Value::list()}|{client_secret,Value::list()}|{grant_type,Value::list()}|{code,Value::list()}|{redirect_uri,Value::list()}]) -> AccessToken::list()
+%% @doc doc Get access_token from The third platform.
 oauth(sina,Args) ->
 	es_sina:oauth(Args);
 oauth(qq,Args) ->
@@ -26,9 +27,8 @@ oauth(qq,Args) ->
 oauth(douban,Args) ->
 	es_douban:oauth(Args).
 
-%% user(sina,Args::[{access_token,Value::list()},{uid,Value::list()}|{screen_name,Value::list()}]) -> Body::json().
-%% user(qq,Args::[{access_token,Value::list()},{oauth_consume_key,Value::list()}]) -> {Openid::list(), Body::json()}. 
-%% user(douban,Args::[{{access_token,list()}}]) -> {Uid::list(), Body::json()}.
+%% @spec user(provider(),Args::[{access_token,Value::list()}|{uid,Value::list()}|{screen_name,Value::list()}]|[{access_token,Value::list()}|{oauth_consume_key,Value::list()}]|[{access_token,list()}]) -> Body::json()
+%% @doc Get the user informations from The third platform using token and other parmeters.
 user(sina,Args) ->
 	es_sina:info(Args);
 user(qq,Args) ->
@@ -36,33 +36,38 @@ user(qq,Args) ->
 user(douban,Args) ->
 	es_douban:info(Args).
 
-%% friendship(Args::[{access_token,Value::list()}]) -> Body::json().
+%% @spec friendship(Args::[{access_token,Value::list()}]) -> Body::json()
+%% @doc create friendship.
 friendship(Args) ->
 	es_sina:create_friendship(Args).
 
-%% blog(provider(),Args::[{access_token,Value::list()},{status,Value::list()}]) -> Res::success|failed.
+%% @spec blog(provider(),Args::[{access_token,Value::list()}|{status,Value::list()}]) -> Res::success|failed
+%% @doc Post microblog.
 blog(sina,Args) ->
 	es_sina:blog(Args);
 blog(qq,Args) ->
 	es_qq:blog(Args).
 
 
-%% blog_pic(sina,Args::[{access_token,Value::list()},{status,Value::list()},{pic,Value::list()}]) -> Res::success|failed.
-%% blog_pic(qq,Args::[{access_token,Value::list()},{oauth_consumer_key,Value::list()},{openid,Value::list()},{format,Value::json|xml},{content,Value::list()},{pic,Value::list()}]) -> Res::success|failed.
+%% @spec blog_pic(provider(),Args::[{access_token,Value::list()}|{status,Value::list()}|{pic,Value::list()}]|[{access_token,Value::list()}|{oauth_consumer_key,Value::list()}|{openid,Value::list()}|{format,Value::json|xml}|{content,Value::list()}|{pic,Value::list()}]) -> Res::success|failed
+%% @doc Post microblog with pictures.
 blog_pic(sina,Args) ->
 	es_sina:blog_pic(Args);
 blog_pic(qq,Args) ->
 	es_qq:blog_pic(Args).
 
-%% blog_pic_url(sina,Args::[{access_token,Value::list()},{status,Value::list()},{url,Value::list()}]) -> Res::success|failed.
+%% @spec blog_pic_url(sina,Args::[{access_token,Value::list()}|{status,Value::list()}|{url,Value::list()}]) -> Res::success|failed
+%% @doc Post mircroblog with url and status.
 blog_pic_url(sina,Args) ->
 	es_sina:blog_pic_url(Args).
 
-%% qzone_share(Args::[{access_token,Value::list()},{oauth_consumer_key,Value::list()},{openid,Value::list()},{format,Value::json|xml},{title,Value::list()},{url,Value::list()},{site,Value::list()},{fromurl,Value::list()}]) -> Res::success|failed.
+%% @spec qzone_share(Args::[{access_token,Value::list()}|{oauth_consumer_key,Value::list()}|{openid,Value::list()}|{format,Value::json|xml}|{title,Value::list()}|{url,Value::list()}|{site,Value::list()}|{fromurl,Value::list()}]) -> Res::success|failed
+%% @doc Post share to qzone and qq microblog.
 qzone_share(Args) ->
 	es_qzone:share(Args).
 
-%% validate(provider(),Uid::binary(),Token::binary()) -> boolean().
+%% @spec validate(provider(),Uid::binary(),Token::binary()) -> boolean()
+%% @doc Validate Uid ang Token whether matches.
 validate(sina,Uid,Token) ->
 	es_validate:sina_validate(Uid,Token);
 validate(qq,Uid,Token) ->
