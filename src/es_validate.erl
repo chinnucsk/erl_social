@@ -7,10 +7,8 @@
 		]).
 
 sina_validate(Uid,Token) ->
-	Body = erl_sina:info([[access_token,erl_social_util:to_l(Token)]]),
-	DBody = erl_social_util:decode_body(Body),
-	Id = erl_social_util:get_key(<<"id">>,DBody),
-	case Uid == Id of
+	Id = erl_social_util:to_l(es_sina:get_token_info(erl_social_util:to_l(Token))),
+	case erl_social_util:to_l(Uid) == Id of
 		true ->
 			true;
 		false ->

@@ -6,7 +6,8 @@
 		blog/1,
 		blog_pic/1,
 		blog_pic_url/1,
-		create_friendship/1
+		create_friendship/1,
+		get_token_info/1
 		]).
 
 -include("erl_social.hrl").
@@ -96,8 +97,21 @@ create_friendship(Args) ->
     Args1 = erl_social_util:set_all_key([{access_token, ""}], Args),
     Path = "/friendships/create.json",
     BodyReq = erl_social_util:create_body(Args1),
-    Body = ?handle(?MODULE,erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(url)], BodyReq})),
-    erl_social_util:decode_body(Body).
+    case ?handle(?MODULE,erl_social_util:req({post, {sina,Path}, [erl_social_util:ct(url)], BodyReq})) of
+		{error,_} ->
+			failed;
+		_ ->
+			success
+	end.
+
+-spec get_token_info(list()) -> binary().
+get_token_info(Token) ->
+	Path = "/oauth2/get_token_info?access_token="++Token,
+	Body = ?handle(?MODULE,erl_social_util:req({post,{sina,Path},[],[]})),
+	DBody = erl_social_util:decode_body(Body),
+	erl_social_util:get_key(<<"uid">>, DBody).
+
+
 
 %%% ==================================================================
 %%% private

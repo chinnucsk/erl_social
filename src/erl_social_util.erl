@@ -138,6 +138,8 @@ to_l(Key) when is_list(Key) ->
 	Key;
 to_l(Key) when is_atom(Key) ->
 	erlang:atom_to_list(Key);
+to_l(Key) when is_integer(Key) ->
+	erlang:integer_to_list(Key);
 to_l(Key) when is_binary(Key) ->
 	erlang:binary_to_list(Key).
 
