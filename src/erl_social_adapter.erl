@@ -17,6 +17,6 @@ get_mod() ->
 mod(closed) ->
 	none;
 mod(normal) ->
-	erl_social_log;
+	erl_social_log_normal;
 mod(lager) ->
-	erl_social_lager.
+	erl_social_log_lager.
