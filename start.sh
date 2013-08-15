@@ -9,5 +9,5 @@ exec erl -pa ebin \
 		-env ERL_LIBS "deps" \
 		-config $CONFIG\
 		-name $NODE \
-		-s platten_sdk \
+		-s erl_social \
 		-setcookie $COOKIE 
