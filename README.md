@@ -84,8 +84,11 @@ erl_social_log_lager:execute/3
 
 ```jvascript
 	example:
-		2013-08-15 14:44:42.760 [debug] <0.210.0>@lager_handler_watcher:94 Lager installed handler {lager_file_backend,"log/error_lucas.log"} into lager_event
-		2013-08-15 14:45:03.270 [error] <0.128.0> POST /index/login [lucas_web] 500 407ms
+		2013-08-15 14:44:42.760 [debug] <0.210.0>@lager_handler_watcher:94 Lager
+installed handler {lager_file_backend,"log/error_lucas.log"} into lager_event
+
+		2013-08-15 14:45:03.270 [error] <0.128.0> POST /index/login [lucas_web]
+500 407ms
 ```
 
 How To Use
