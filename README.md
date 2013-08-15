@@ -31,7 +31,7 @@ File introduce:
 
 * `erl_social_log_server.erl` gen_server for logging local.
 
-* `erl_social_util.erl normal tool.
+* `erl_social_util.erl` normal tool.
 
 * `erl_sina.erl` providing sina call interface.
 
@@ -80,15 +80,16 @@ example:
     {logfile,"/home/lucas/erl_social.txt"}
 ]}]	
 ```
-* `erl_social`:
-        `providers`:define The Third Platform.
-            `sina|qq|douban`:The Third Platform name.
-                `app_key`:application key.
-                `grant_type`:the type of grant.
-                `app_secret`:the secret of application.
-                `url`:the redirect url.
-                `format`:return typ.
-        `logtype`: closed|normal|lage,define the log server state and open type.        `logfile`: when logtype is normal,the location of logfile.
+* `erl_social`:<br />
+        `providers`:define The Third Platform.<br />
+		`sina|qq|douban`:The Third Platform name.<br />
+                `app_key`:application key.<br />
+                `grant_type`:the type of grant.<br />
+                `app_secret`:the secret of application.<br />
+                `url`:the redirect url.<br />
+                `format`:return typ.<br />
+        `logtype`: closed|normal|lage,define the log server state and open type.<br />  
+		`logfile`: when logtype is normal,the location of logfile.<br />
 
 * `lager`:
 	The configure of `lager` please reference [`this lager`](https://github.com/basho/lager) <br /> 
