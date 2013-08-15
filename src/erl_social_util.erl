@@ -15,24 +15,29 @@
 		 create_body/1,
 		 format_multipart_formdata/4,
 		 to_l/1,
-		 get_time/0
+		 get_format_string/3,
+		 normal_format/0
 		 ]).
 
 -include("erl_social.hrl").
 
+%% @doc get the enviroment varibal of application erl_social.
 get_env(Provider,Type) ->
 	{ok,List} = application:get_env(erl_social,providers),
 	TValue = proplists:get_value(Provider,List),
 	proplists:get_value(Type,TValue).
 
+%% @doc remove the key from args.
 getout_key(Key, Args) ->
 	Pic = get_key(Key, Args),
 	Args1 = lists:keydelete(Key, 1, Args),
 	{Pic, Args1}.
 
+%% @doc get the value of the key,see get_key/3.
 get_key(Key, Args) ->
 	get_key(Key, Args, false).
 
+%% @doc get the value of the key, if not found ,use Default.
 get_key(Key, Args, Default) ->
 	case lists:keyfind(Key, 1, Args) of
 		false ->
@@ -40,7 +45,7 @@ get_key(Key, Args, Default) ->
 		{_, T} ->
 			T
 	end.
-
+%% @doc set the default value to key in args,if key not found. 
 set_key(Key, Args, Default) ->
 	case get_key(Key, Args) of
 		false ->
@@ -49,6 +54,7 @@ set_key(Key, Args, Default) ->
 			Args
 	end.
 
+%% @doc set the default value to key in args,if key not found. 
 set_all_key([], Args) ->
 	check_if_null(Args,[]);
 set_all_key([{status, Default}|Rest], Args) ->
@@ -58,14 +64,16 @@ set_all_key([{Key, Default}|Rest], Args) ->
 	Args1 = set_key(Key, Args, Default),
 	set_all_key(Rest, Args1).
 
+%% @doc set url key and encode it ,and add to the args.
 set_uri_key(Key, Args) ->
 	case lists:keyfind(Key, 1, Args) of
 		false ->
-			platten_log:error("set uri key error");
+			erl_social_log:error(?MODULE,"set uri key error");
 		{Key, Value} ->
 			lists:keyreplace(Key, 1, Args, {Key, http_uri:encode(Value)})
 	end.
 
+%% @doc check if exists null value, for example = "".
 check_if_null([],Acc) ->
 	lists:reverse(Acc);
 check_if_null([{Key,Value}|_Rest],_Acc) when Value == "" ->
@@ -75,10 +83,12 @@ check_if_null([{Key,Value}|_Rest],_Acc) when Value == "" ->
 check_if_null([{Key,Value}|Rest],Acc) ->
 	check_if_null(Rest, [{Key,Value}|Acc]).
 
+%% @doc create post body.
 create_body(Args) ->
 	Args1 = do_create_body(Args, []),
 	do_combine(Args1, []).
 
+%% @doc The third platform general path.
 url({sina, Path}) ->
     Url = ["https://api.weibo.com", Path],
     lists:flatten(Url);
@@ -92,9 +102,11 @@ url({qq, Path}) ->
 	Url = ["https://graph.qq.com", Path],
 	lists:flatten(Url).
 
+%% @doc make the content-length.
 header(Length) ->
 	{"Content-Length", Length}.
 
+%% @doc make the content-type.
 ct(url) ->
 	{"Content-Type", "application/x-www-form-urlencoded"};
 ct(mul) ->
@@ -104,16 +116,20 @@ ct(json) ->
 ct(Boundary) ->
 	{"Content-Type", "multipart/form-data; boundary=" ++ Boundary}.
 
+%% @doc make a req use lhttpc.
 req({Method, Path, Hdrs, Body}) ->
     Hdrs1 = [{"user-agent", "eunit"} | Hdrs],
     lhttpc:request(url(Path), Method, Hdrs1, Body, infinity).
 
+%% @doc encode the json args.
 encode_body(Args) ->
 	jsx:encode(Args).
 
+%% @doc decode the json args.
 decode_body(Args) ->
 	jsx:decode(Args, [{labels, binary}]).
 
+%% @doc multipart formata body.
 format_multipart_formdata(Boundary, Fields, Files, Ctype) ->
     FieldParts = lists:map(fun({FieldName, FieldContent}) ->
                                    [lists:concat(["--", Boundary]),
@@ -134,16 +150,25 @@ format_multipart_formdata(Boundary, Fields, Files, Ctype) ->
     Parts = lists:append([FieldParts2, FileParts2, EndingParts]),
     string:join(Parts, "\r\n").
 
+%% @doc turn value to list.
 to_l(Key) when is_list(Key) ->
 	Key;
 to_l(Key) when is_atom(Key) ->
 	erlang:atom_to_list(Key);
+to_l(Key) when is_integer(Key) ->
+	erlang:integer_to_list(Key);
 to_l(Key) when is_binary(Key) ->
 	erlang:binary_to_list(Key).
 
-get_time()->
-	{{A1,A2,A3},{B1,B2,B3}} = calendar:now_to_local_time(os:timestamp()),
-	integer_to_list(A1) ++ "-" ++ integer_to_list(A2) ++ "-" ++ integer_to_list(A3) ++ "  " ++ integer_to_list(B1) ++ "-" ++ integer_to_list(B2) ++ "-" ++ integer_to_list(B3) ++ "  ".
+%% @doc get the currend value ,and put out as list.
+get_format_string(Type, Format, Args)->
+	{{Y,M,D},{HH,MM,SS}} = calendar:now_to_local_time(os:timestamp()),
+	Format1 = lists:flatten("~B-~2.10.0B-~2.10.0BT~2.10.0B:~2.10.0B:~2.10.0BZ [" ++ erl_social_util:to_l(Type) ++ "]" ++ Format ++ "\r\n"),
+	Args1 = [Y, M, D, HH, MM, SS] ++ Args,
+	lists:flatten(io_lib:format(Format1, Args1)).
+
+normal_format()->
+	"(module) ~s (request) ~s (reponse) ~s".
 
 %%% ===============================================================
 %%% private

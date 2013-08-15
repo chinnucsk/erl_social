@@ -12,18 +12,28 @@ Introduce
 
 erl_social.erl is a tool for our application. 
 
-* _oauth for oauth.
+* oauth/2: for getting access_token.
 
-* _user for get userinfo.
+* user/2: for getting user infomations.
 
-* _blog for send a status to the platform.
+* blog/2: for sending a status to the platform.
 
-* _log for debug infomations.
+* blog_pic/2: for sending a status and pictures to the platform.
+
+* blog_pic_url/2: for sending a url and status to the sina blog.
+
+* friendship/1: for creatting freiendship on sina blog.
+
+* qzone_share/1: for sending a url and status to qzone and qq blog.
+
+* validate/3: for validating the Token and Uid whether is right .
 
 Configure
 --------------
 
 The configure file are in priv, named app.config. You can modify it according your need.
+
+Including erl_social,lager.
 
 Attention
 ------------
@@ -34,7 +44,7 @@ Use the Code to get access_token.
 
 Use the access_token to get user_info or send messages or other things.
 
-The Third Platten Url
+The Third Platform Url
 -----------
 
 * [sina develop url](http://open.weibo.com/wiki/%E5%BE%AE%E5%8D%9AAPI) <br />
@@ -44,47 +54,82 @@ The Third Platten Url
 Log 
 ------------
 
-Server start a log server called erl_social_log_server, you can define the log path in include file(`paras` LOG_FILE).
+Now providing two kinds of log server,one is a simple server which recording the simple infomations to a file, another is lager which you can get detail informations.
 
-erl_social_log:error/1, will print error type infos.
+At the same time,you can see blows to close the log server.
 
-erl_social_log:format/1, will print debug type infos.
+In the priv/app.config,erl_social:logtype has three value:
+	* closed; // close the log server
+	* normal; // open a simple log server
+	* lager; //open lager server
+
+When logging,erl_social provides a log adaptor to choose which method to log it.
+
+1.Normal:Server start a log server called erl_social_log_server, you can define the log path in priv/app.config ,named erl_social:logfile.
+
+erl_social_log_normal:execute/3 
+
+```javascript
+	example:
+		2013-8-13  11-13-33   [error] module (es_sina) info lacking uid or scre
+en_name
+
+		2013-8-13  11-53-24   [debug] module (es_qzone) info {"ret":0,"msg":"ok"
+,"share_id":1376366004}
+```
+
+2.Larger:Start application lager,you can define the lager configure in priv/app.config, application lager.
+
+erl_social_log_lager:execute/3
+
+```jvascript
+	example:
+		2013-08-15 14:44:42.760 [debug] <0.210.0>@lager_handler_watcher:94 Lager
+installed handler {lager_file_backend,"log/error_lucas.log"} into lager_event
+
+		2013-08-15 14:45:03.270 [error] <0.128.0> POST /index/login [lucas_web]
+500 407ms
+```
 
 How To Use
 ------------
 
 The parameter of args is tuple list, if you didn't define, some paras will use the default in erl_social.hrl.
 
-The Parameter instructions delcars in erl_social.erl.
+The Parameter instructions declare in erl_social.erl.
 
 
-* make && ./start.sh 
+* make && ./start.sh
 
-* erl_social:oauth(sina,Args).
+* erl_social:start().//start application erl_social;
+
+* erl_social:oauth(sina,Args).//get access_token;
 
   erl_social:oauth(qq,Args).
 
   erl_social:oauth(douban,Args).
 
-* erl_social:user(sina, Args).
+* erl_social:user(sina, Args).//get user infomations;
 
   erl_social:user(qq, Args).
 
   erl_social:user(douban, Args).
 
-* erl_social:friendship(Args).
+* erl_social:friendship(Args).//create user friendship;
 
-* erl_social:blog(sina,Args).
+* erl_social:blog(sina,Args).//post a microblog;
 
   erl_social:blog(qq,Args).
 
-* erl_social:blog_pic(sina,Args).
+* erl_social:blog_pic(sina,Args).//post a picture microblog;
 
   erl_social:blog_pic(qq,Args).
 
-* erl_social:qzone_share(Args).
+* erl_social:blog_pic_url(sina,Args).//post a url microblog;
 
-* erl_social:validate(sina,Uid,Token).
+* erl_social:qzone_share(Args).//post status to qzone and q microblog;
+
+* erl_social:validate(sina,Uid,Token).// check; 
 
   erl_social:validate(qq,Uid,Token).
 

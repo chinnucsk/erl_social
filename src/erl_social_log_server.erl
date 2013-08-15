@@ -20,11 +20,16 @@
 
 -record(state, {io}).
 
+%% @spec start_link() -> pid()
+%% @doc start gen server.
 start_link() ->
 	gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
-log(Type,Module,Info) ->
-	gen_server:call(?MODULE,{Type,Module,Info}).
+%% @type logtype() =debug|error
+%% @spec log(logtype(),string(),list()) -> ok | {error, file:posix() | badarg | terminated}
+%% @doc log the info with type,module in the logfile. 
+log(Type,Format,Args) ->
+	gen_server:call(?MODULE,{Type,Format,Args}).
 
 %%% =================================================================
 %%% internal
@@ -39,14 +44,12 @@ terminate(_Reason, #state{io=Io}) ->
 	file:close(Io),
 	ok.
 
-handle_call({debug,Module,Info}, _From, #state{io=Io}=State) ->
-	Time = erl_social_util:get_time(),
-	Res = Time ++ " [debug] module (" ++ erl_social_util:to_l(Module) ++  ") info " ++ Info ++ "\r\n",
+handle_call({debug,Format,Args}, _From, #state{io=Io}=State) ->
+	Res = erl_social_util:get_format_string(debug, Format, Args),
 	Return = file:write(Io, Res),
 	{reply, Return, State};
-handle_call({error,Module,Info}, _From, #state{io=Io}=State) ->
-	Time = erl_social_util:get_time(),
-	Res = Time ++ " [error] module (" ++ erl_social_util:to_l(Module) ++  ") info " ++ Info ++ "\r\n",
+handle_call({error,Format,Args}, _From, #state{io=Io}=State) ->
+	Res = erl_social_util:get_format_string(error, Format, Args),
 	Return = file:write(Io, Res),
 	{reply, Return, State}.
 

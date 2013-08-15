@@ -1,4 +1,4 @@
--module(erl_social_log).
+-module(erl_social_log_normal).
 
 -export([
 		execute/3
