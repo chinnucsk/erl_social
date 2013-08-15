@@ -17,7 +17,7 @@ Application erl_social is a tool to develop The third platform using erlang.
 
 File introduce:
 
- `erl_social.erl` providing call interface.
+*  `erl_social.erl` providing call interface.
 
 * `erl_social_app.erl` application file.
 
