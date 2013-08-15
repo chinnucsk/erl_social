@@ -10,4 +10,5 @@ exec erl -pa ebin \
 		-config $CONFIG\
 		-name $NODE \
 		-s erl_social \
+		-s sync go \
 		-setcookie $COOKIE 
