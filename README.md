@@ -10,23 +10,22 @@ Mainly,including QQ,Sina,Douban.
 Introduce
 -------------
 
-erl_social.erl is a tool for our application. 
+Application erl_social is a tool to develop The third platform using erlang. 
 
-* oauth/2: for getting access_token.
-
-* user/2: for getting user infomations.
-
-* blog/2: for sending a status to the platform.
-
-* blog_pic/2: for sending a status and pictures to the platform.
-
-* blog_pic_url/2: for sending a url and status to the sina blog.
-
-* friendship/1: for creatting freiendship on sina blog.
-
-* qzone_share/1: for sending a url and status to qzone and qq blog.
-
-* validate/3: for validating the Token and Uid whether is right .
+File introduce:
+	`erl_social.erl` providing call interface;
+	`erl_social_app.erl` application file;
+	`erl_soical_sup.erl` start supervision;
+	`erl_social_log_adapter.erl` choose log module;
+	`erl_social_log_lager.erl` call lager log server interface;
+	`erl_social_log_normal.erl` call local simple log server interface;
+	`erl_social_log_server.erl` gen_server for logging local;
+	`erl_social_util.erl normal tool;
+	`erl_sina.erl` providing sina call interface;
+	`erl_qq.erl` providing qq call interface;
+	`erl_douban.erl` providing douban call interface;
+	`erl_qzone.erl` providing qqzone and qq microblog call interface;
+	`erl_validate.erl` providing check value call interface;
 
 Configure
 --------------
