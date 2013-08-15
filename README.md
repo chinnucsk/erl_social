@@ -76,7 +76,7 @@ example:
                 `app_secret`:the secret of application.<br />
                 `url`:the redirect url.<br />
                 `format`:return typ.<br />
-        `logtype`: closed|normal|lager,define the log server state and open type.
+        `logtype`: closed|normal|lager,define the log server state and open type.<br />
 		`logfile`: when logtype is normal,the location of logfile.<br />
 
 * `lager`:
