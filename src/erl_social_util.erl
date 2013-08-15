@@ -15,7 +15,8 @@
 		 create_body/1,
 		 format_multipart_formdata/4,
 		 to_l/1,
-		 get_time/0
+		 get_format_string/3,
+		 normal_format/0
 		 ]).
 
 -include("erl_social.hrl").
@@ -67,7 +68,7 @@ set_all_key([{Key, Default}|Rest], Args) ->
 set_uri_key(Key, Args) ->
 	case lists:keyfind(Key, 1, Args) of
 		false ->
-			erl_social_log:error(?MDOULE,"set uri key error");
+			erl_social_log:error(?MODULE,"set uri key error");
 		{Key, Value} ->
 			lists:keyreplace(Key, 1, Args, {Key, http_uri:encode(Value)})
 	end.
@@ -160,9 +161,14 @@ to_l(Key) when is_binary(Key) ->
 	erlang:binary_to_list(Key).
 
 %% @doc get the currend value ,and put out as list.
-get_time()->
-	{{A1,A2,A3},{B1,B2,B3}} = calendar:now_to_local_time(os:timestamp()),
-	integer_to_list(A1) ++ "-" ++ integer_to_list(A2) ++ "-" ++ integer_to_list(A3) ++ "  " ++ integer_to_list(B1) ++ "-" ++ integer_to_list(B2) ++ "-" ++ integer_to_list(B3) ++ "  ".
+get_format_string(Type, Format, Args)->
+	{{Y,M,D},{HH,MM,SS}} = calendar:now_to_local_time(os:timestamp()),
+	Format1 = lists:flatten("~B-~2.10.0B-~2.10.0BT~2.10.0B:~2.10.0B:~2.10.0BZ [" ++ erl_social_util:to_l(Type) ++ "]" ++ Format ++ "\r\n"),
+	Args1 = [Y, M, D, HH, MM, SS] ++ Args,
+	lists:flatten(io_lib:format(Format1, Args1)).
+
+normal_format()->
+	"(module) ~s (request) ~s (reponse) ~s".
 
 %%% ===============================================================
 %%% private

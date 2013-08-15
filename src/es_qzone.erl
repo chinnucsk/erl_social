@@ -22,7 +22,7 @@ share(Args) ->
                                 {fromurl,""}], Args),
     Path = "/share/add_share",
     BodyReq = erl_social_util:create_body(Args1),
-    Res = case ?handle(?MODULE,erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(url)], BodyReq})) of
+    Res = case ?handle(?MODULE,Path,erl_social_util:req({post, {qq,Path}, [erl_social_util:ct(url)], BodyReq})) of
         {error,_} ->
             failed;
         _ ->

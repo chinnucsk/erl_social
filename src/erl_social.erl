@@ -16,7 +16,8 @@
 %% @type provider()=sina|qq|douban.
 
 start() ->
-	application:start(?MODULE).
+	application:start(?MODULE),
+	start_log().
 
 %% @spec oauth(provider(),Args::[{client_id,Value::list()}|{client_secret,Value::list()}|{grant_type,Value::list()}|{code,Value::list()}|{redirect_uri,Value::list()}]) -> AccessToken::list()
 %% @doc doc Get access_token from The third platform.
@@ -74,3 +75,23 @@ validate(qq,Uid,Token) ->
 	es_validate:qq_validate(Uid,Token);
 validate(douban,Uid,Token) ->
 	es_validate:douban_validate(Uid,Token).
+
+
+%% ==================================================================
+%% private functions
+%% ==================================================================
+
+%% @doc start log server
+%% There two type log server, one is normal(simple log server),
+%% another is lager(lager server).
+%% @end.
+start_log() ->
+    case application:get_env(erl_social,logtype) of
+		{ok, closed} ->
+			ok;
+        {ok,normal} ->
+            erl_social_log_server:start_link();
+        {ok,lager} ->
+            application:start(lager)
+    end.
+
