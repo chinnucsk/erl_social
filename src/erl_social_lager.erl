@@ -15,9 +15,6 @@ execute(Type, Format, Args) ->
 %% ================================================================
 
 %% @doc judge the info type.
-
-msg(error) ->
-	error;
 msg(debug) ->
 	debug;
 msg(_) ->
