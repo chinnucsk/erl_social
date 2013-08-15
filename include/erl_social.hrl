@@ -1,5 +1,5 @@
 -define(log(Type,Module,Req,Bodys),
-		case erl_social_adapter:get_mod() of
+		case erl_social_log_adapter:get_mod() of
 			none ->
 				ok;
 			Mod ->
