@@ -50,6 +50,49 @@ The configure file are in priv, named app.config. You can modify it according yo
 
 Including erl_social,lager.
 
+example:
+```javascript
+[{erl_social,[
+    {providers,[
+        {sina,[
+            {app_key,"2128144137"},
+            {grant_type, "authorization_code"},
+            {app_secret,"4bd23d77f8015cbf956f113825a164b5"},
+            {url,"http://lucas.yunio.com:8001"},
+            {format, "json"}
+        ]},
+        {qq,[
+            {app_key,"100498331"},
+            {grant_type, "authorization_code"},
+            {app_secret,"b0c64798dd28da85f7fb7ca38ae6f6cc"},
+            {url,"http://3.yunio.com"},
+            {format, "json"}
+        ]},
+        {douban,[
+            {app_key,"06b6c6228430e83b142452678c92b8b1"},
+            {grant_type, "authorization_code"},
+            {app_secret,"844ea0d505816b63"},
+            {url,"http://lucas.yunio.com:8001"},
+            {format, "json"}
+        ]}
+ ]},
+    {logtype, lager},
+    {logfile,"/home/lucas/erl_social.txt"}
+]}]	
+```
+* `erl_social`:
+        `providers`:define The Third Platform.
+            `sina|qq|douban`:The Third Platform name.
+                `app_key`:application key.
+                `grant_type`:the type of grant.
+                `app_secret`:the secret of application.
+                `url`:the redirect url.
+                `format`:return typ.
+        `logtype`: closed|normal|lage,define the log server state and open type.        `logfile`: when logtype is normal,the location of logfile.
+
+* `lager`:
+	The configure of `lager` please reference [`this lager`](https://github.com/basho/lager) <br /> 
+
 Attention
 ------------
 
