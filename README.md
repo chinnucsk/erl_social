@@ -17,31 +17,19 @@ Application erl_social is a tool to develop The third platform using erlang.
 
 File introduce:
 
-*  `erl_social.erl` providing call interface.
-
-* `erl_social_app.erl` application file.
-
-* `erl_soical_sup.erl` start supervision.
-
-* `erl_social_log_adapter.erl` choose log module.
-
-* `erl_social_log_lager.erl` call lager log server interface.
-
-* `erl_social_log_normal.erl` call local simple log server interface.
-
-* `erl_social_log_server.erl` gen_server for logging local.
-
-* `erl_social_util.erl` normal tool.
-
-* `erl_sina.erl` providing sina call interface.
-
-* `erl_qq.erl` providing qq call interface.
-
-* `erl_douban.erl` providing douban call interface.
-
-* `erl_qzone.erl` providing qqzone and qq microblog call interface.
-
-* `erl_validate.erl` providing check value call interface.
+*  `erl_social.erl` providing call interface.<br />
+* `erl_social_app.erl` application file.<br />
+* `erl_soical_sup.erl` start supervision.<br />
+* `erl_social_log_adapter.erl` choose log module.<br />
+* `erl_social_log_lager.erl` call lager log server interface.<br />
+* `erl_social_log_normal.erl` call local simple log server interface.<br />
+* `erl_social_log_server.erl` gen_server for logging local.<br />
+* `erl_social_util.erl` normal tool.<br />
+* `erl_sina.erl` providing sina call interface.<br />
+* `erl_qq.erl` providing qq call interface.<br />
+* `erl_douban.erl` providing douban call interface.<br />
+* `erl_qzone.erl` providing qqzone and qq microblog call interface.<br />
+* `erl_validate.erl` providing check value call interface.<br />
 
 Configure
 --------------
@@ -88,7 +76,7 @@ example:
                 `app_secret`:the secret of application.<br />
                 `url`:the redirect url.<br />
                 `format`:return typ.<br />
-        `logtype`: closed|normal|lage,define the log server state and open type.<br />  
+        `logtype`: closed|normal|lager,define the log server state and open type.
 		`logfile`: when logtype is normal,the location of logfile.<br />
 
 * `lager`:
