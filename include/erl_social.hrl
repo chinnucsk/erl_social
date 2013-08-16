@@ -11,9 +11,9 @@
 		{ok, {{200,_},_,Bodys}} ->
 				?log(debug,Module,Req,Bodys),
 				Bodys;
-		{ok, {_,_,Bodys}} ->
+		{ok, {Code,_,Bodys}} ->
 				?log(debug,Module,Req,Bodys),
-				Bodys;
+				{error,Code,Bodys};
 		{error, Reason} ->
 				?log(error,Module,Req,Reason),
 				{error,Reason}
