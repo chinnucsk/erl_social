@@ -15,6 +15,8 @@ Introduce
 
 Application erl_social is a tool to develop The third platform using erlang. 
 
+Add appliation sync, we can compile our codes drnamic.
+
 File introduce:
 
 *  `erl_social.erl` providing call interface.<br />
@@ -137,6 +139,12 @@ installed handler {lager_file_backend,"log/error_lucas.log"} into lager_event
 		2013-08-15 14:45:03.270 [error] <0.128.0> POST /index/login [lucas_web]
 500 407ms
 ```
+Doc
+------------
+
+Use edown to generate documents,the config file located in directory doc named edown.config,edwon_make is a erlang script to generate documents,to config edwon.config,please reference [`this`](http://www.erlang.org/doc/apps/edoc/chapter.html).
+
+useage:make docs
 
 How To Use
 ------------
