@@ -90,7 +90,7 @@ start_log() ->
 		{ok, closed} ->
 			ok;
         {ok,normal} ->
-            erl_social_log_server:start_link();
+			supervisor:start_child(erl_social_sup,{erl_social_log_server,{erl_social_log_server,start_link,[]},permanent,5000,worker,dynamic});
         {ok,lager} ->
             application:start(lager)
     end.
