@@ -16,7 +16,8 @@
 		 format_multipart_formdata/4,
 		 to_l/1,
 		 get_format_string/3,
-		 normal_format/0
+		 normal_format/0,
+		 check_if_null/2
 		 ]).
 
 -include("erl_social.hrl").
@@ -77,7 +78,7 @@ set_uri_key(Key, Args) ->
 check_if_null([],Acc) ->
 	lists:reverse(Acc);
 check_if_null([{Key,Value}|_Rest],_Acc) when Value == "" ->
-	Reason = atom_to_list(Key) ++ "is null",
+	Reason = atom_to_list(Key) ++ " is null",
 	erl_social_log:error(?MODULE,Reason),
 	?check_value({error,Reason});
 check_if_null([{Key,Value}|Rest],Acc) ->
@@ -175,7 +176,7 @@ normal_format()->
 %%% ==============================================================
 
 do_create_body([], Acc) ->
-	lists:reverse(Acc);
+	Acc;
 do_create_body([{Key, Value}|Rest], Acc) ->
 	List = lists:concat([to_l(Key), "=", Value]),
 	do_create_body(Rest, [List|Acc]).
@@ -188,4 +189,47 @@ do_combine([A |Rest], Acc) ->
 	List = lists:concat([A, "&"]),
 	do_combine(Rest, [List|Acc]).
 
+-ifdef(TEST).
+-include_lib("eunit/include/eunit.hrl").
+
+util_test() ->
+	
+	%% getout_key test
+	?assertEqual({"/home/lucas/1.pic",[]},getout_key(pic,[{pic,"/home/lucas/1.pic"}])),
+
+	%% get_key test
+	?assertEqual("123",get_key(name,[{name,"123"}])),
+	?assertEqual(false,get_key(name,[{id,123}])),
+	?assertEqual(456,get_key(id,[{name,"123"}],456)),
+
+	%% set_key test
+	?assertEqual([{name,"lucas"}],set_key(name,[{name,"lucas"}],"alias")),
+	?assertEqual([{name,"alias"}],set_key(name,[],"alias")),
+
+	%% set_all_key test
+	?assertEqual([{name,"lucas"}],set_all_key([{name,"lucas"}],[])),
+	?assertEqual([{name,"alias"}],set_all_key([{name,"lucas"}],[{name,"alias"}])),
+	
+	%% check_if_null test
+	?assertEqual([{name,"lucas"}],check_if_null([{name,"lucas"}],[])),
+
+	%% create_body test
+	?assertEqual("name=lucas&id=123",create_body([{name,"lucas"},{id,"123"}])),
+
+	%% url test
+	?assertEqual("https://api.weibo.com/123",url({sina,"/123"})),
+	?assertEqual("https://www.douban.com/123",url({douban,"/123"})),
+	?assertEqual("https://api.douban.com/123",url({doubanapi,"/123"})),
+	?assertEqual("https://graph.qq.com/123",url({qq,"/123"})),
+
+	%% header test
+	?assertEqual({"Content-Length", 100},header(100)),
+
+	%% encode_body test
+	?assertEqual(<<"{\"name\":123}">>,encode_body([{name,123}])),
+
+	%% decode_body test
+	?assertEqual([{<<"name">>,123}],decode_body(<<"{\"name\":123}">>)).
+
+-endif.
 
