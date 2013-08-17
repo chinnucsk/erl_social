@@ -27,3 +27,16 @@ bin/%:
 
 clean:$(REBAR)
 	@$(REBAR) clean
+
+ifndef SUITES
+EUNIT_SUITEs = 
+else
+EUNIT_SUITES = suites=$(SUITES)
+endif
+
+test:$(REBAR) deps
+	@$(REBAR) eunit skip_deps=true $(EUNIT_SUITES)
+
+ct: $(REBAR) deps
+	@CT_COMPILE=true $(REBAR) compile -D TEST
+	@$(REBAR) ct skip_deps=true -v
