@@ -14,7 +14,7 @@ setup() ->
             								{format, "json"}
         							]}]),
 	application:set_env(erl_social,logtype,closed),
-	application:set_env(erl_social,port,8082),
+	application:set_env(erl_social,port,7083),
 	application:set_env(erl_social,moca_server,enable),
 	application:set_env(erl_social,dispatch_file,"../priv/dispatch.script"),
 	application:start(inets),
