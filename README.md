@@ -67,7 +67,9 @@ example:
         ]}
  ]},
     {logtype, lager},
-    {logfile,"/home/lucas/erl_social.txt"}
+    {logfile,"/home/lucas/erl_social.txt"},
+	{moca_server,disable},
+    {dispatch_file,"priv/dispatch.script"}
 ]}]	
 ```
 * `erl_social`:<br />
@@ -80,9 +82,24 @@ example:
                 `format`:return typ.<br />
         `logtype`: closed|normal|lager,define the log server state and open type.<br />
 		`logfile`: when logtype is normal,the location of logfile.<br />
+		`moca_server`:start a simulation server, there are two values:disable enable,default value is disable. <br />
+		`dispatch_file`:define the config file of simulation server dispatch. <br />
 
 * `lager`:
 	The configure of `lager` please reference [`this lager`](https://github.com/basho/lager) <br /> 
+
+Test 
+-----------
+
+We use enuit to test the codes.
+
+The test needs open a simulation server,we can open it by setting the moca_server equals enable in priv/app.config.
+
+The moca server dispatch config locate in priv/dispatch.script, and the call back files locate in src/erl_social_moca_server/.The server can hanle all the requests we need in this applicaion.
+
+The test cases locate in test/.
+
+we can run `make doc` to test the codes.
 
 Attention
 ------------
