@@ -91,16 +91,36 @@ create_body(Args) ->
 
 %% @doc The third platform general path.
 url({sina, Path}) ->
-    Url = ["https://api.weibo.com", Path],
+    Url = case application:get_env(erl_social,moca_server) of 
+			{ok,enable} ->
+				["http://localhost:8081", Path];
+			{ok,_} ->
+				["https://api.weibo.com", Path]
+		  end,
     lists:flatten(Url);
 url({douban, Path}) ->
-    Url = ["https://www.douban.com", Path],
+    Url = case application:get_env(erl_social,moca_server) of 
+			{ok,enable} ->
+				["http://localhost:8081", Path];
+			{ok,_} ->
+				["https://www.douban.com", Path]
+		  end,
     lists:flatten(Url);
 url({doubanapi, Path}) ->
-    Url = ["https://api.douban.com", Path],
+    Url = case application:get_env(erl_social,moca_server) of 
+			{ok,enable} ->
+				["http://localhost:8081", Path];
+			{ok,_} ->
+				["https://api.douban.com", Path]
+		  end,
     lists:flatten(Url);
 url({qq, Path}) ->
-	Url = ["https://graph.qq.com", Path],
+    Url = case application:get_env(erl_social,moca_server) of 
+			{ok,enable} ->
+				["http://localhost:8081", Path];
+			{ok,_} ->
+				["https://graph.qq.com", Path]
+		  end,
 	lists:flatten(Url).
 
 %% @doc make the content-length.
@@ -215,12 +235,6 @@ util_test() ->
 
 	%% create_body test
 	?assertEqual("name=lucas&id=123",create_body([{name,"lucas"},{id,"123"}])),
-
-	%% url test
-	?assertEqual("https://api.weibo.com/123",url({sina,"/123"})),
-	?assertEqual("https://www.douban.com/123",url({douban,"/123"})),
-	?assertEqual("https://api.douban.com/123",url({doubanapi,"/123"})),
-	?assertEqual("https://graph.qq.com/123",url({qq,"/123"})),
 
 	%% header test
 	?assertEqual({"Content-Length", 100},header(100)),

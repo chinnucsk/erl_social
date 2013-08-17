@@ -15,9 +15,11 @@
 
 %% @type provider()=sina|qq|douban.
 
+%% @doc start the erl_social application.
 start() ->
 	application:start(?MODULE),
-	start_log().
+	start_log(),
+	start_moca_server().
 
 %% @spec oauth(provider(),Args::[{client_id,Value::list()}|{client_secret,Value::list()}|{grant_type,Value::list()}|{code,Value::list()}|{redirect_uri,Value::list()}]) -> AccessToken::list()
 %% @doc doc Get access_token from The third platform.
@@ -86,12 +88,55 @@ validate(douban,Uid,Token) ->
 %% another is lager(lager server).
 %% @end.
 start_log() ->
-    case application:get_env(erl_social,logtype) of
-		{ok, closed} ->
+    case get_env(logtype,closed) of
+		closed ->
 			ok;
-        {ok,normal} ->
+        normal ->
 			supervisor:start_child(erl_social_sup,{erl_social_log_server,{erl_social_log_server,start_link,[]},permanent,5000,worker,dynamic});
-        {ok,lager} ->
+        lager ->
             application:start(lager)
     end.
 
+%% @doc start moca server.
+start_moca_server() ->
+	case get_env(moca_server,disable) of
+		disable ->
+			ok;
+		enable ->
+			setup_cowboy()
+	end.
+
+%% @doc start cowboy.
+setup_cowboy() ->
+	StartFun = start_fun(),
+	{ok, _} = cowboy:StartFun(erl_soical,100,trans_opts(),proto_opts()).
+
+%% @doc start function.
+start_fun() ->
+	start_http.
+
+%% @doc transport options.
+trans_opts() ->
+    {ok, Ip} = inet_parse:address(get_env(ip, "127.0.0.1")),
+    [
+    {port, get_env(port, 8081)},
+    {ip, Ip},
+    {max_connections, get_env(max_connections, 1024)},
+    {backlog, get_env(backlog, 1024)}
+    ].
+
+%% @doc property.
+proto_opts()->
+	DispatchFile = get_env(dispatch_file, "priv/dispatch.script"),
+	{ok, Dispatch} = file:script(DispatchFile),
+    [
+    {env, [{dispatch, cowboy_router:compile(Dispatch)}]},
+    {timeout, get_env(timeout, 300000)}
+    ].
+
+%% @doc get application env value,if undefined will return default.
+get_env(Key, Default) ->
+    case application:get_env(erl_social, Key) of
+        {ok, Value} -> Value;
+        undefined -> Default
+    end.
