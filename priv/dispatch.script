@@ -1,0 +1,23 @@
+[
+	{'_',[
+		%% sina
+		{"/oauth2/access_token",es_moca_sina_oauth,[]},
+		{"/users/show.json",es_moca_sina_info,[]},
+		{"/2/statuses/[...]",es_moca_sina_blog,[]},
+		{"/friendships/create.json",es_moca_sina_friendship,[]},
+		{"/oauth2/get_token_info",es_moca_sina_query_token,[]},
+
+		%% qq
+		{"/oauth2.0/token",es_moca_qq_oauth,[]},
+		{"/user/get_simple_userinfo",es_moca_qq_info,[]},
+		{"/oauth2.0/me",es_moca_qq_openid,[]},
+		{"/t/[...]",es_moca_qq_blog,[]},
+
+		%% douban
+		{"/service/auth2/token",es_moca_douban_oauth,[]},
+		{"/v2/user/~me",es_moca_douban_info,[]},
+
+		%% qzone
+		{"/share/add_share",es_moca_qzone_share,[]}
+		]}
+].
