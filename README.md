@@ -163,6 +163,28 @@ Use edown to generate documents,the config file located in directory doc named e
 
 useage:make docs
 
+Rel
+-----------
+
+* create rel:make rel<br />
+* clean rel:make relclean <br />
+
+Dialyzer
+-----------
+
+To analysis software discrepancies such as definite type errors, code which has become dead or unreachable due to some programming error,unnecessary tests,etc. 
+<br />
+
+* create plt:make build-plt
+* dialyzer:make dialyzer
+
+Xref
+----------
+
+A Cross Reference Tool for analyzing dependencies between functions, modules, applications and releases. <br />
+
+* make xref
+
 How To Use
 ------------
 
