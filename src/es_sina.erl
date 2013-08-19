@@ -136,7 +136,7 @@ get_value(Args) ->
         false ->
             case erl_social_util:get_key(screen_name, Args) of
                 false ->
-                    erl_social_log:error(?MODULE,"lacking uid or screen_name");
+                    ?handle(?MODULE,"",{error,"lacking uid or screen_name"});
                 Name ->
                     {"screen_name", http_uri:encode(Name)}
             end;
@@ -149,7 +149,7 @@ check_uid_name_exist(Args) ->
         false ->
             case erl_social_util:get_key(screen_name, Args) of
                 false ->
-                    erl_social_log:error(?MODULE,"lacking uid or screen_name");
+                    ?handle(?MODULE,"",{error,"lacking uid or screen_name"});
                 _ ->
                     ok
             end;

@@ -69,7 +69,7 @@ set_all_key([{Key, Default}|Rest], Args) ->
 set_uri_key(Key, Args) ->
 	case lists:keyfind(Key, 1, Args) of
 		false ->
-			erl_social_log:error(?MODULE,"set uri key error");
+			?handle(?MODULE,"",{error,"set url key error"});
 		{Key, Value} ->
 			lists:keyreplace(Key, 1, Args, {Key, http_uri:encode(Value)})
 	end.
@@ -79,7 +79,7 @@ check_if_null([],Acc) ->
 	lists:reverse(Acc);
 check_if_null([{Key,Value}|_Rest],_Acc) when Value == "" ->
 	Reason = atom_to_list(Key) ++ " is null",
-	erl_social_log:error(?MODULE,Reason),
+	?handle(?MODULE,"",{error,Reason}),
 	?check_value({error,Reason});
 check_if_null([{Key,Value}|Rest],Acc) ->
 	check_if_null(Rest, [{Key,Value}|Acc]).
